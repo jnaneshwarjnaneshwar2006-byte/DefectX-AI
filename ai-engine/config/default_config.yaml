@@ -1,0 +1,62 @@
+# DEFECTX AI - Configuration File
+project:
+  name: "DEFECTX AI"
+  version: "1.0.0"
+  description: "PatchCore-inspired memory-bank nearest-neighbor industrial anomaly detection baseline"
+
+dataset:
+  root_dir: "data/mvtec"        # Configurable dataset root path (e.g., path to organiser dataset)
+  category: "bottle"           # Target category or null/empty if flat dataset
+  adapter: "auto"              # Dataset adapter: "auto", "mvtec", "custom"
+  normal_class_name: "good"    # Label/folder name for normal samples ("good", "normal", "ok")
+  train_dir: null              # Optional custom subpath for training data (e.g. "train")
+  test_dir: null               # Optional custom subpath for test data (e.g. "test")
+  ground_truth_dir: null       # Optional custom subpath for ground truth masks
+  image_size: [224, 224]       # Conservative 224x224 image resolution for RTX 4050 (6GB VRAM)
+  val_ratio: 0.2               # 20% of train/good held out strictly for threshold fitting
+  seed: 42
+  batch_size: 16               # Safe batch size for feature extraction on 6GB VRAM
+  num_workers: 0               # 0 recommended on Windows to avoid spawn overhead
+
+model:
+  backbone: "resnet18"
+  pretrained: true
+  layers: ["layer2", "layer3"] # Mid-level feature layers (128 & 256 channels)
+  patch_pooling_kernel: 3
+  patch_pooling_stride: 1
+  patch_pooling_padding: 1
+
+memory_bank:
+  coreset_sampling_ratio: 0.1  # Subsample 10% of patch features for fast search & low memory
+  subsample_method: "greedy_coreset" # "greedy_coreset" or "random"
+  distance_metric: "euclidean"
+  device_distance: "cuda"       # "cuda" or "cpu"
+  chunk_size: 512               # Chunk size for distance computation to prevent VRAM spikes
+
+thresholding:
+  method: "percentile"          # "percentile" or "iqr" or "extreme_value"
+  percentile: 99.0              # 99th percentile of normal validation patch/image scores
+  margin_multiplier: 1.05       # Safety margin factor applied to normal validation score
+
+heatmap:
+  gaussian_sigma: 4.0           # Gaussian blur sigma for smooth localization map
+  normalize: true               # Min-max normalization for visualization
+  colormap: "JET"               # OpenCV COLORMAP_JET
+  overlay_alpha: 0.45           # Alpha blend factor with original image
+
+severity:
+  # Heuristic prototype: based on anomalous pixel ratio and peak anomaly intensity
+  # NOT certified physical damage measurement
+  area_threshold_low: 0.005     # 0.5% of pixels exceeding threshold
+  area_threshold_medium: 0.02   # 2.0% of pixels exceeding threshold
+  area_threshold_high: 0.06     # 6.0% of pixels exceeding threshold
+  intensity_weight: 0.5
+
+confidence:
+  calibrated: false             # Set to false until calibration validation by Member 4
+  temperature: 1.0
+
+output:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  heatmaps_dir: "results/heatmaps"

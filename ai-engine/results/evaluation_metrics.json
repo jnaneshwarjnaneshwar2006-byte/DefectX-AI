@@ -1,0 +1,44 @@
+{
+  "image_auroc": 1.0,
+  "pixel_auroc": 0.9995,
+  "image_threshold": 0.6366,
+  "pixel_threshold": 0.506,
+  "accuracy": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1_score": 1.0,
+  "false_positive_rate_normal": 0.0,
+  "confusion_matrix": {
+    "true_negatives": 8,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "true_positives": 18
+  },
+  "per_defect_breakdown": {
+    "broken_large": {
+      "count": 6,
+      "mean_anomaly_score": 4.288741747538249,
+      "detected_count": 6,
+      "detection_rate": 1.0
+    },
+    "broken_small": {
+      "count": 6,
+      "mean_anomaly_score": 4.071900367736816,
+      "detected_count": 6,
+      "detection_rate": 1.0
+    },
+    "contamination": {
+      "count": 6,
+      "mean_anomaly_score": 4.913523276646932,
+      "detected_count": 6,
+      "detection_rate": 1.0
+    },
+    "good": {
+      "count": 8,
+      "mean_anomaly_score": 0.5334065034985542,
+      "detected_count": 0,
+      "detection_rate": 0.0
+    }
+  },
+  "total_test_samples": 26
+}
