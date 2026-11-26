@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEFECTX AI — Intelligent Industrial Defect Detection</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="landing-body">
+
+  <!-- Background Ambient Glow -->
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+
+  <!-- Landing Navigation -->
+  <header class="landing-nav" id="landing-navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <img src="assets/logo/defectx-logo.svg" alt="DEFECTX AI Logo">
+      </a>
+      <ul class="nav-links" id="landing-nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pipeline">Architecture</a></li>
+        <li><a href="dashboard.html">Command Center</a></li>
+        <li><a href="model-insights.html">Model Insights</a></li>
+        <li><a href="dataset-explorer.html">Dataset Explorer</a></li>
+        <li><a href="system-status.html">System Health</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-secondary">
+          <i class="fas fa-gauge-high"></i> Dashboard
+        </a>
+        <a href="inspection.html" class="btn btn-primary">
+          <i class="fas fa-crosshairs"></i> Run Inspection
+        </a>
+      </div>
+      <button class="landing-mobile-toggle" id="landing-mobile-toggle" aria-label="Toggle Navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Content -->
+          <div class="hero-content">
+            <div class="hero-badge">
+              <i class="fas fa-microchip"></i> CLOCKIT 2026 HACKATHON • INDUSTRIAL AI
+            </div>
+            <h1 class="hero-title">
+              Intelligent Industrial <br>
+              <span class="text-gradient">Defect Detection</span>
+            </h1>
+            <p class="hero-subtitle">
+              Open-set unsupervised anomaly detection trained strictly on normal industrial components.
+              Detect unseen defects, localize anomalies with pixel-precision heatmaps, and grade heuristic severity in
+              real-time.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="inspection.html" class="btn btn-primary" style="padding: 14px 28px; font-size: 1rem;">
+                <i class="fas fa-bolt"></i> Start Live Inspection
+              </a>
+              <a href="dashboard.html" class="btn btn-secondary" style="padding: 14px 28px; font-size: 1rem;">
+                <i class="fas fa-chart-line"></i> View Telemetry
+              </a>
+            </div>
+
+            <!-- Quantitative Stats Row -->
+            <div class="hero-stats-row">
+              <div class="hero-stat-card">
+                <div class="stat-val">1.0000</div>
+                <div class="stat-label">Image AUROC (Synthetic Dev Eval)</div>
+              </div>
+              <div class="hero-stat-card">
+                <div class="stat-val">~14.2 ms</div>
+                <div class="stat-label">RTX 4050 CUDA Dev Benchmark</div>
+              </div>
+              <div class="hero-stat-card">
+                <div class="stat-val">0.0 %</div>
+                <div class="stat-label">Test Defect Leakage (Normal-Only Fit)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Visualizer: Simulated Industrial Scanner HUD -->
+          <div class="hero-visual">
+            <div class="hero-scanner-frame">
+              <div class="hero-scanner-radar"></div>
+
+              <!-- SVG Industrial Bottle Render -->
+              <svg width="220" height="320" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="z-index: 2;">
+                <!-- Bottle Neck -->
+                <rect x="85" y="20" width="30" height="40" rx="3" fill="#14213D" stroke="#00F2FE" stroke-width="2" />
+                <rect x="80" y="15" width="40" height="8" rx="2" fill="#00F2FE" opacity="0.6" />
+                <!-- Bottle Shoulder -->
+                <path
+                  d="M85 60 C85 80 50 100 50 130 L50 260 C50 270 60 280 70 280 L130 280 C140 280 150 270 150 260 L150 130 C150 100 115 80 115 60 Z"
+                  fill="#0B132B" stroke="#00F2FE" stroke-width="2.5" />
+                <!-- Optical Liquid Level -->
+                <path
+                  d="M52 160 C75 165 125 155 148 160 L148 260 C148 268 140 278 130 278 L70 278 C60 278 52 268 52 260 Z"
+                  fill="rgba(0, 242, 254, 0.15)" />
+                <!-- Highlight lines -->
+                <line x1="62" y1="120" x2="62" y2="250" stroke="#38BDF8" stroke-width="2" stroke-dasharray="8 6"
+                  opacity="0.4" />
+              </svg>
+
+              <!-- Live HUD Overlay -->
+              <div class="hero-scanner-hud">
+                <div class="hud-top-bar">
+                  <span><i class="fas fa-crosshairs"></i> OPTICAL CAM #01</span>
+                  <span>DEV BENCHMARK</span>
+                </div>
+
+                <!-- Simulated Anomaly Bounding Box -->
+                <div class="hud-box" style="top: 38%; left: 46%; width: 90px; height: 75px;">
+                  <span class="hud-box-tag">DEFECT LOCALIZED</span>
+                </div>
+
+                <div class="hud-top-bar">
+                  <span>INPUT: 224x224 TENSOR</span>
+                  <span style="color: var(--cyan);"><i class="fas fa-circle" style="font-size: 8px;"></i> RESNET-18
+                    L2+L3</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visualizer Card Footer -->
+            <div class="hero-visual-footer">
+              <div class="visual-info-item">
+                <span class="lbl">PREDICTION</span>
+                <span class="val" style="color: var(--red);">ANOMALY</span>
+              </div>
+              <div class="visual-info-item">
+                <span class="lbl">ANOMALY SCORE</span>
+                <span class="val">4.2887 (Thresh 0.6366)</span>
+              </div>
+              <div class="visual-info-item">
+                <span class="lbl">HEURISTIC SEVERITY</span>
+                <span class="val" style="color: #FF4757;">CRITICAL (ESTIMATE)</span>
+              </div>
+              <div class="visual-info-item">
+                <span class="lbl">CUDA BENCHMARK</span>
+                <span class="val">~14.2 ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Grid Section -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">TECHNICAL SPECIFICATIONS</span>
+          <h2 class="section-title">Verified Engineering Architecture</h2>
+          <p class="section-desc">
+            DEFECTX AI is built on verifiable open-set anomaly detection principles. Every component reflects our actual
+            PyTorch implementation, normal-only validation, and hardware-conscious design.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1: Deep Feature Extraction -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="feature-title">Deep Feature Extraction</h3>
+            <p class="feature-desc">
+              Pretrained ResNet-18 with frozen weights extracts mid-level representations from layer2 (128-ch) and
+              layer3 (256-ch). Local average pooling aligns them into 384-dimensional patch tokens at 28x28 spatial
+              resolution.
+            </p>
+            <div class="feature-meta">
+              <i class="fas fa-check-circle" style="color: var(--green);"></i> Pretrained ResNet-18 (384-dim Tokens)
+            </div>
+          </div>
+
+          <!-- Feature 2: Memory Bank Anomaly Detection -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="fas fa-memory"></i>
+            </div>
+            <h3 class="feature-title">Memory Bank Anomaly Detection</h3>
+            <p class="feature-desc">
+              PatchCore-inspired one-class baseline trained strictly on normal images. Features are subsampled using
+              greedy minimax k-center coreset selection (10% ratio) with chunked L2 Euclidean nearest-neighbor search.
+            </p>
+            <div class="feature-meta">
+              <i class="fas fa-check-circle" style="color: var(--green);"></i> Greedy Minimax Coreset Subsampling
+            </div>
+          </div>
+
+          <!-- Feature 3: AI Heatmap & Defect Localization -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="fas fa-fire"></i>
+            </div>
+            <h3 class="feature-title">AI Heatmap & Defect Localization</h3>
+            <p class="feature-desc">
+              Upsamples patch distance scores back to 224x224 input resolution via bilinear interpolation, smooths
+              spatial noise with Gaussian filtering (&sigma; = 4.0), and generates colorized JET anomaly overlays for
+              human inspection.
+            </p>
+            <div class="feature-meta">
+              <i class="fas fa-check-circle" style="color: var(--green);"></i> Bilinear Upsampling & Gaussian Smoothing
+            </div>
+          </div>
+
+          <!-- Feature 4: Validation-Based Threshold Calibration -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="fas fa-sliders"></i>
+            </div>
+            <h3 class="feature-title">Validation-Based Threshold Calibration</h3>
+            <p class="feature-desc">
+              Decision thresholds are fitted exclusively on a held-out normal validation split (val/good) using the
+              99.0th percentile with a 1.05 safety margin. Test defect images are strictly excluded from threshold
+              fitting.
+            </p>
+            <div class="feature-meta">
+              <i class="fas fa-check-circle" style="color: var(--green);"></i> Normal-Only Percentile Fitting
+            </div>
+          </div>
+
+          <!-- Feature 5: Heuristic Severity Assessment -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="fas fa-gauge-high"></i>
+            </div>
+            <h3 class="feature-title">Heuristic Severity Assessment</h3>
+            <p class="feature-desc">
+              Triage levels are estimated by combining anomalous area ratio (percentage of pixels exceeding threshold)
+              and peak anomaly intensity into NONE, LOW, MEDIUM, HIGH, and CRITICAL categories as an operational
+              heuristic prototype.
+            </p>
+            <div class="feature-meta">
+              <i class="fas fa-circle-info" style="color: var(--amber);"></i> Heuristic Prototype (Not Physical
+              Measurement)
+            </div>
+          </div>
+
+          <!-- Feature 6: Hardware-Accelerated AI Inference -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <i class="fas fa-microchip"></i>
+            </div>
+            <h3 class="feature-title">Hardware-Accelerated AI Inference</h3>
+            <p class="feature-desc">
+              Executes PyTorch in inference mode with NVIDIA CUDA acceleration and CPU fallback. Integrates with PHP
+              enterprise backends via a clean CLI interface (JSON on stdout, logs on stderr, automated --health check).
+            </p>
+            <div class="feature-meta">
+              <i class="fas fa-check-circle" style="color: var(--green);"></i> PyTorch CUDA Runtime & PHP CLI Interface
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4-Step Pipeline Section -->
+    <section class="workflow-section" id="pipeline">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">INSPECTION PIPELINE</span>
+          <h2 class="section-title">How DEFECTX AI Operates</h2>
+          <p class="section-desc">
+            From raw camera capture to localized anomaly map and heuristic triage verdict.
+          </p>
+        </div>
+
+        <div class="workflow-steps-grid">
+          <div class="workflow-card">
+            <div class="step-number">01</div>
+            <h3 class="step-heading">Capture & Normalization</h3>
+            <p class="step-body">
+              Accepts high-resolution RGB frames, validates image integrity, and resizes to 224x224 using ImageNet
+              statistical normalization.
+            </p>
+            <div class="step-tag">OpenCV & PIL</div>
+          </div>
+
+          <div class="workflow-card">
+            <div class="step-number">02</div>
+            <h3 class="step-heading">Deep Patch Embedding</h3>
+            <p class="step-body">
+              Extracts intermediate feature tensors from Layer 2 and Layer 3 of ResNet-18, capturing both local texture
+              and macro structure.
+            </p>
+            <div class="step-tag">PyTorch / ResNet-18</div>
+          </div>
+
+          <div class="workflow-card">
+            <div class="step-number">03</div>
+            <h3 class="step-heading">Memory Bank Search</h3>
+            <p class="step-body">
+              Computes Euclidean distance between candidate patch representations and the coreset memory bank of
+              verified normal features.
+            </p>
+            <div class="step-tag">RTX 4050 CUDA Matrix Ops</div>
+          </div>
+
+          <div class="workflow-card">
+            <div class="step-number">04</div>
+            <h3 class="step-heading">Verdict & Heatmap</h3>
+            <p class="step-body">
+              Determines binary classification via zero-leakage threshold, generates smoothed JET heatmaps, and assigns
+              heuristic severity.
+            </p>
+            <div class="step-tag">JSON Output & Heatmap PNG</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="container footer-inner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="assets/logo/defectx-logo.svg" alt="DEFECTX AI" style="height: 28px;">
+        <span>&copy; 2026 DEFECTX AI — CLOCKIT Hackathon Project. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="dashboard.html">Command Center</a>
+        <a href="inspection.html">Live Inspection</a>
+        <a href="history.html">History</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="model-insights.html">Model Insights</a>
+        <a href="dataset-explorer.html">Dataset Explorer</a>
+        <a href="system-status.html">System Health</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener() => {
+      const nav = document.getElementById('landing-navbar');
+      if (window.scrollY > 40) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile navigation drawer toggle
+    const mobileBtn = document.getElementById('landing-mobile-toggle');
+    const navLinks = document.getElementById('landing-nav-links');
+    if (mobileBtn && navLinks) {
+      mobileBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+      // Close on link click
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
+    }
+  </script>
+</body>
+
+</html>

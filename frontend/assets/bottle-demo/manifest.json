@@ -1,0 +1,202 @@
+[
+  {
+    "id": "BOTTLE-N001",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "000.png",
+    "filename": "BOTTLE-N001_test_good_000.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N001_test_good_000.png"
+  },
+  {
+    "id": "BOTTLE-N002",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "001.png",
+    "filename": "BOTTLE-N002_test_good_001.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N002_test_good_001.png"
+  },
+  {
+    "id": "BOTTLE-N003",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "002.png",
+    "filename": "BOTTLE-N003_test_good_002.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N003_test_good_002.png"
+  },
+  {
+    "id": "BOTTLE-N004",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "003.png",
+    "filename": "BOTTLE-N004_test_good_003.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N004_test_good_003.png"
+  },
+  {
+    "id": "BOTTLE-N005",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "004.png",
+    "filename": "BOTTLE-N005_test_good_004.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N005_test_good_004.png"
+  },
+  {
+    "id": "BOTTLE-N006",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "005.png",
+    "filename": "BOTTLE-N006_test_good_005.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N006_test_good_005.png"
+  },
+  {
+    "id": "BOTTLE-N007",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "006.png",
+    "filename": "BOTTLE-N007_test_good_006.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N007_test_good_006.png"
+  },
+  {
+    "id": "BOTTLE-N008",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "test/good",
+    "original_filename": "007.png",
+    "filename": "BOTTLE-N008_test_good_007.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N008_test_good_007.png"
+  },
+  {
+    "id": "BOTTLE-N009",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "train/good",
+    "original_filename": "000.png",
+    "filename": "BOTTLE-N009_train_good_000.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N009_train_good_000.png"
+  },
+  {
+    "id": "BOTTLE-N010",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "train/good",
+    "original_filename": "001.png",
+    "filename": "BOTTLE-N010_train_good_001.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N010_train_good_001.png"
+  },
+  {
+    "id": "BOTTLE-N011",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "train/good",
+    "original_filename": "002.png",
+    "filename": "BOTTLE-N011_train_good_002.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N011_train_good_002.png"
+  },
+  {
+    "id": "BOTTLE-N012",
+    "label": "NORMAL",
+    "defect_type": "none",
+    "display_type": "Normal Specimen",
+    "source_split": "train/good",
+    "original_filename": "003.png",
+    "filename": "BOTTLE-N012_train_good_003.png",
+    "image_path": "assets/bottle-demo/normal/BOTTLE-N012_train_good_003.png"
+  },
+  {
+    "id": "BOTTLE-D001",
+    "label": "DEFECTIVE",
+    "defect_type": "broken_large",
+    "display_type": "Broken Large",
+    "source_split": "test/broken_large",
+    "original_filename": "000.png",
+    "filename": "BOTTLE-D001_broken_large_000.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D001_broken_large_000.png"
+  },
+  {
+    "id": "BOTTLE-D002",
+    "label": "DEFECTIVE",
+    "defect_type": "broken_large",
+    "display_type": "Broken Large",
+    "source_split": "test/broken_large",
+    "original_filename": "001.png",
+    "filename": "BOTTLE-D002_broken_large_001.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D002_broken_large_001.png"
+  },
+  {
+    "id": "BOTTLE-D003",
+    "label": "DEFECTIVE",
+    "defect_type": "broken_large",
+    "display_type": "Broken Large",
+    "source_split": "test/broken_large",
+    "original_filename": "002.png",
+    "filename": "BOTTLE-D003_broken_large_002.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D003_broken_large_002.png"
+  },
+  {
+    "id": "BOTTLE-D004",
+    "label": "DEFECTIVE",
+    "defect_type": "broken_small",
+    "display_type": "Broken Small",
+    "source_split": "test/broken_small",
+    "original_filename": "000.png",
+    "filename": "BOTTLE-D004_broken_small_000.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D004_broken_small_000.png"
+  },
+  {
+    "id": "BOTTLE-D005",
+    "label": "DEFECTIVE",
+    "defect_type": "broken_small",
+    "display_type": "Broken Small",
+    "source_split": "test/broken_small",
+    "original_filename": "001.png",
+    "filename": "BOTTLE-D005_broken_small_001.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D005_broken_small_001.png"
+  },
+  {
+    "id": "BOTTLE-D006",
+    "label": "DEFECTIVE",
+    "defect_type": "broken_small",
+    "display_type": "Broken Small",
+    "source_split": "test/broken_small",
+    "original_filename": "002.png",
+    "filename": "BOTTLE-D006_broken_small_002.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D006_broken_small_002.png"
+  },
+  {
+    "id": "BOTTLE-D007",
+    "label": "DEFECTIVE",
+    "defect_type": "contamination",
+    "display_type": "Contamination",
+    "source_split": "test/contamination",
+    "original_filename": "000.png",
+    "filename": "BOTTLE-D007_contamination_000.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D007_contamination_000.png"
+  },
+  {
+    "id": "BOTTLE-D008",
+    "label": "DEFECTIVE",
+    "defect_type": "contamination",
+    "display_type": "Contamination",
+    "source_split": "test/contamination",
+    "original_filename": "001.png",
+    "filename": "BOTTLE-D008_contamination_001.png",
+    "image_path": "assets/bottle-demo/defective/BOTTLE-D008_contamination_001.png"
+  }
+]

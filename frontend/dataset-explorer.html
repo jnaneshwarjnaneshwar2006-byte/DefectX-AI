@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dataset Explorer — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link active" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">AI Intelligence</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Dataset Explorer</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <div class="system-status-pill">
+          <div class="pulse-dot"></div>
+          <span>SYSTEM READY</span>
+        </div>
+        <a href="inspection.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-bolt"></i> Run Inspection
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-database text-cyan"></i> Industrial Dataset Explorer
+          </h1>
+          <p>Inspect active training corpus, evaluation splits, defect categories, and integration readiness.</p>
+        </div>
+        <div class="page-actions-group">
+          <span class="badge badge-warning"><i class="fas fa-clock"></i> Official Organiser Dataset Pending</span>
+        </div>
+      </div>
+
+      <!-- Clear Status Banner: Organiser Dataset Status -->
+      <div class="panel"
+        style="border-left: 3px solid var(--amber); background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(14, 22, 38, 0.95)); padding: 18px 22px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div
+              style="width: 40px; height: 40px; border-radius: 50%; background: var(--amber-bg); border: 1px solid var(--amber-border); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--amber);">
+              <i class="fas fa-triangle-exclamation"></i>
+            </div>
+            <div>
+              <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">OFFICIAL HACKATHON DATASET INTEGRATION
+                PENDING</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">
+                The official CLOCKIT 2026 organiser dataset has not been released yet. The system is verified and active
+                on the benchmark MVTec AD Bottle dataset.
+              </div>
+            </div>
+          </div>
+          <span class="badge badge-warning font-mono">Adapter Ready</span>
+        </div>
+      </div>
+
+      <!-- Dataset Metrics (4 Cards) -->
+      <div class="kpi-metrics-grid">
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Total Corpus Images</span>
+            <div class="kpi-card-icon cyan"><i class="fas fa-images"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value font-mono">292</span>
+          </div>
+          <div class="kpi-card-footer">MVTec AD Bottle Benchmark</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Normal Training Set</span>
+            <div class="kpi-card-icon green"><i class="fas fa-circle-check"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-green font-mono">209</span>
+          </div>
+          <div class="kpi-card-footer">train/good (100% normal)</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Normal Validation</span>
+            <div class="kpi-card-icon blue"><i class="fas fa-sliders"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value font-mono">20</span>
+          </div>
+          <div class="kpi-card-footer">Exclusive threshold calibration</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Test Defect Specimens</span>
+            <div class="kpi-card-icon red"><i class="fas fa-triangle-exclamation"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-red font-mono">63</span>
+          </div>
+          <div class="kpi-card-footer">3 distinct defect morphologies</div>
+        </div>
+      </div>
+
+      <!-- Categories Breakdown Table + Adapter Blueprint -->
+      <div class="dashboard-main-grid">
+        <!-- Left: Categories Breakdown -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-folder-tree"></i>
+              <span>Corpus Splits & Defect Morphology Categories</span>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Partition</th>
+                  <th>Count</th>
+                  <th>Dimensions</th>
+                  <th>Ground Truth</th>
+                  <th>Validation Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: #fff;">good</strong></td>
+                  <td><span class="badge badge-success">train/good</span></td>
+                  <td class="font-mono">209</td>
+                  <td class="font-mono">1024x1024 PNG</td>
+                  <td>N/A (Normal)</td>
+                  <td><span class="badge badge-success"><i class="fas fa-check"></i> 100% Intact</span></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fff;">good</strong></td>
+                  <td><span class="badge badge-info">val/good</span></td>
+                  <td class="font-mono">20</td>
+                  <td class="font-mono">1024x1024 PNG</td>
+                  <td>N/A (Normal)</td>
+                  <td><span class="badge badge-success"><i class="fas fa-check"></i> 100% Intact</span></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fff;">good</strong></td>
+                  <td><span class="badge badge-info">test/good</span></td>
+                  <td class="font-mono">20</td>
+                  <td class="font-mono">1024x1024 PNG</td>
+                  <td>N/A (Normal)</td>
+                  <td><span class="badge badge-success"><i class="fas fa-check"></i> 100% Intact</span></td>
+                </tr>
+                <tr>
+                  <td><strong class="text-red">broken_large</strong></td>
+                  <td><span class="badge badge-danger">test/broken_large</span></td>
+                  <td class="font-mono">22</td>
+                  <td class="font-mono">1024x1024 PNG</td>
+                  <td><span class="badge badge-cyan">Mask PNG</span></td>
+                  <td><span class="badge badge-success"><i class="fas fa-check"></i> 100% Intact</span></td>
+                </tr>
+                <tr>
+                  <td><strong class="text-amber">broken_small</strong></td>
+                  <td><span class="badge badge-warning">test/broken_small</span></td>
+                  <td class="font-mono">22</td>
+                  <td class="font-mono">1024x1024 PNG</td>
+                  <td><span class="badge badge-cyan">Mask PNG</span></td>
+                  <td><span class="badge badge-success"><i class="fas fa-check"></i> 100% Intact</span></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #F97316;">contamination</strong></td>
+                  <td><span class="badge badge-danger">test/contamination</span></td>
+                  <td class="font-mono">19</td>
+                  <td class="font-mono">1024x1024 PNG</td>
+                  <td><span class="badge badge-cyan">Mask PNG</span></td>
+                  <td><span class="badge badge-success"><i class="fas fa-check"></i> 100% Intact</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Configurable Adapter Blueprint -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-plug text-cyan"></i>
+              <span>Future Organiser Adapter</span>
+            </div>
+            <span class="badge badge-cyan">Configurable YAML</span>
+          </div>
+          <div class="panel-body"
+            style="display: flex; flex-direction: column; gap: 12px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+            <p>
+              When the official CLOCKIT 2026 dataset is delivered, our AI engine avoids hardcoded MVTec folder
+              assumptions via the <code>OrganiserDatasetAdapter</code>.
+            </p>
+            <div
+              style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); line-height: 1.6;">
+              <span style="color: var(--text-muted);"># ai-engine/config/default_config.yaml</span><br>
+              dataset:<br>
+              &nbsp;&nbsp;adapter: "organiser_folder"<br>
+              &nbsp;&nbsp;root_path: "dataset/organiser_input"<br>
+              &nbsp;&nbsp;normal_folder: "good"<br>
+              &nbsp;&nbsp;val_split_ratio: 0.15<br>
+              &nbsp;&nbsp;image_size: [224, 224]
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              Inspection utility command: <code>python ai-engine/inspect_dataset.py --dataset-dir &lt;path&gt;</code>
+              automatically checks corrupt files and labels.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -65,7 +65,11 @@ class MVTecTestDataset(Dataset):
         if mask_path and os.path.exists(mask_path):
             mask = Image.open(mask_path).convert("L")
             mask_tensor = self.mask_transform(mask)
-            mask_tensor = (mask_tensor > 0.5).float()
+            # Robust binarization:
+            # Handles VisA masks with {0, 1} (where ToTensor yields ~0.00392 for foreground)
+            # as well as MVTec masks with {0, 255} (where ToTensor yields 1.0 for foreground).
+            # Any non-zero pixel (> 0.0) is a defect pixel (1.0), background remains 0.0.
+            mask_tensor = (mask_tensor > 0.0).float()
         else:
             mask_tensor = torch.zeros((1, self.image_size[0], self.image_size[1]), dtype=torch.float32)
 
@@ -174,10 +178,11 @@ def load_dataset_splits(
     val_ratio: Optional[float] = None,
     seed: Optional[int] = None,
     image_size: Optional[Tuple[int, int]] = None,
+    dataset_format: Optional[str] = None,
 ) -> Tuple[Dataset, Dataset, Dataset]:
     """
     Unified entry point for loading dataset splits using the configured dataset adapter.
-    Supports MVTec AD format and custom organizer dataset layouts.
+    Supports MVTec AD format, VisA benchmark dataset, and custom organizer dataset layouts.
     Strict zero-leakage guarantee: test data is never included in train or threshold validation splits.
     """
     from .dataset_adapter import get_dataset_adapter
@@ -188,6 +193,9 @@ def load_dataset_splits(
     v_ratio = val_ratio if val_ratio is not None else ds_cfg.get("val_ratio", 0.2)
     s = seed if seed is not None else ds_cfg.get("seed", 42)
     img_size = image_size or tuple(ds_cfg.get("image_size", [224, 224]))
+
+    if dataset_format:
+        config.setdefault("dataset", {})["adapter"] = dataset_format
 
     adapter = get_dataset_adapter(config)
     return adapter.load_splits(

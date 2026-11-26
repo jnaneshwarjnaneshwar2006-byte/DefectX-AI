@@ -1,4 +1,4 @@
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 import numpy as np
 
 
@@ -104,3 +104,119 @@ class NormalOnlyThresholdSelector:
         self.pixel_threshold = float(state["pixel_threshold"])
         self.normal_val_stats = state.get("normal_val_stats", {})
         self.is_fitted = state.get("is_fitted", True)
+
+
+def compute_wilson_score_interval(successes: int, total: int, confidence: float = 0.95) -> Tuple[float, float]:
+    """
+    Computes Wilson score binomial confidence interval for empirical FPR.
+    Args:
+        successes: Number of false positives.
+        total: Total normal validation samples.
+        confidence: Confidence level (default: 0.95).
+    Returns:
+        (lower_bound, upper_bound)
+    """
+    if total <= 0:
+        return 0.0, 1.0
+
+    p_hat = successes / total
+    # z-score for two-tailed normal distribution (1.95996 for 95%)
+    z = 1.95996 if abs(confidence - 0.95) < 1e-4 else 2.57583  # 95% or 99%
+    z_sq = z * z
+
+    denom = 1.0 + z_sq / total
+    center = (p_hat + z_sq / (2.0 * total)) / denom
+    margin = (z * np.sqrt((p_hat * (1.0 - p_hat) / total) + (z_sq / (4.0 * total * total)))) / denom
+
+    lower = max(0.0, float(center - margin))
+    upper = min(1.0, float(center + margin))
+    return lower, upper
+
+
+def compute_threshold_sensitivity(
+    val_scores: List[float] | np.ndarray,
+    percentiles: List[float] = [95.0, 97.0, 99.0],
+    margin_multiplier: float = 1.05,
+) -> Dict[str, Any]:
+    """
+    Performs validation-only threshold sensitivity analysis across candidate percentiles.
+    Strictly uses held-out NORMAL validation scores. Zero test defect samples or test labels used.
+
+    Args:
+        val_scores: List or numpy array of normal validation anomaly scores.
+        percentiles: Percentiles to evaluate (default: [95.0, 97.0, 99.0]).
+        margin_multiplier: Safety factor applied to raw threshold (default: 1.05).
+    Returns:
+        Structured dictionary containing sensitivity metrics, FPR confidence intervals,
+        and statistical sample-size limitations.
+    """
+    scores = np.array(val_scores, dtype=np.float32)
+    N = len(scores)
+    if N == 0:
+        raise ValueError("Cannot perform sensitivity analysis on empty validation scores.")
+
+    mean_score = float(np.mean(scores))
+    std_score = float(np.std(scores))
+    min_score = float(np.min(scores))
+    max_score = float(np.max(scores))
+
+    percentile_results = []
+    for p in sorted(percentiles):
+        raw_thresh = float(np.percentile(scores, p))
+        margin_thresh = float(raw_thresh * margin_multiplier)
+
+        fp_raw = int(np.sum(scores >= raw_thresh))
+        fp_margin = int(np.sum(scores >= margin_thresh))
+
+        fpr_raw = float(fp_raw / N)
+        fpr_margin = float(fp_margin / N)
+
+        ci_raw_low, ci_raw_high = compute_wilson_score_interval(fp_raw, N, confidence=0.95)
+        ci_margin_low, ci_margin_high = compute_wilson_score_interval(fp_margin, N, confidence=0.95)
+
+        percentile_results.append({
+            "percentile": float(p),
+            "raw_threshold": raw_thresh,
+            "raw_validation_false_positives": fp_raw,
+            "raw_empirical_fpr": fpr_raw,
+            "raw_empirical_fpr_pct": round(fpr_raw * 100, 2),
+            "raw_fpr_95_ci": [round(ci_raw_low, 4), round(ci_raw_high, 4)],
+            "raw_fpr_95_ci_pct": [round(ci_raw_low * 100, 2), round(ci_raw_high * 100, 2)],
+            "margin_threshold": margin_thresh,
+            "margin_validation_false_positives": fp_margin,
+            "margin_empirical_fpr": fpr_margin,
+            "margin_empirical_fpr_pct": round(fpr_margin * 100, 2),
+            "margin_fpr_95_ci": [round(ci_margin_low, 4), round(ci_margin_high, 4)],
+            "margin_fpr_95_ci_pct": [round(ci_margin_low * 100, 2), round(ci_margin_high * 100, 2)],
+        })
+
+    # Statistical confidence bounds for small validation sets
+    resolution_pct = round((1.0 / N) * 100, 4)
+    rule_of_three_upper_pct = round((3.0 / N) * 100, 4)
+
+    return {
+        "metadata": {
+            "analysis_type": "validation_only_threshold_sensitivity",
+            "validation_sample_count": N,
+            "margin_multiplier": margin_multiplier,
+            "score_statistics": {
+                "mean": mean_score,
+                "std": std_score,
+                "min": min_score,
+                "max": max_score,
+            },
+            "integrity_guarantee": "Computed exclusively on held-out normal validation samples. Zero test defect samples or test labels used.",
+        },
+        "percentile_analysis": percentile_results,
+        "sample_size_confidence_limitations": {
+            "validation_sample_count": N,
+            "single_sample_resolution_pct": resolution_pct,
+            "rule_of_three_zero_fp_upper_bound_pct": rule_of_three_upper_pct,
+            "statistical_limitations": [
+                f"Small Sample Discrete Resolution: With N={N} validation samples, each observation represents {resolution_pct:.2f}% of the empirical distribution. Fractional FPRs between 0% and {resolution_pct:.2f}% cannot be resolved.",
+                f"Upper Bound on Zero False Positives: Observing 0 false positives at 99% + margin only establishes with 95% confidence that the true normal FPR is below ~{rule_of_three_upper_pct:.2f}% (Rule of Three), not identically 0.0%.",
+                "Distribution Shift Vulnerability: Normal variance under unobserved lighting, lens drift, or supplier batch variation can shift the empirical distribution and inflate operational FPR.",
+                "Calibration vs Recall Disclaimer: This is a calibration analysis. Lowering thresholds increases theoretical sensitivity, but cannot be claimed to improve defect recall without an independent, separately documented test evaluation.",
+            ],
+        },
+    }

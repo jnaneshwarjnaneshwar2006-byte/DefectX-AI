@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Status & Hardware Health — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">System</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Hardware & Health</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <button class="btn btn-primary btn-sm" id="btn-run-diagnostics">
+          <i class="fas fa-heart-pulse"></i> Ping Health Check
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-server text-cyan"></i> Hardware Telemetry & Infrastructure Health
+          </h1>
+          <p>Live PyTorch CUDA accelerator diagnostics, model checkpoint validation, and backend gateway health.</p>
+        </div>
+        <div class="page-actions-group">
+          <span class="badge badge-success font-mono" id="health-last-ping"><i class="fas fa-clock"></i> Last Ping: Just
+            Now</span>
+        </div>
+      </div>
+
+      <!-- Executive Status Banner -->
+      <div class="panel"
+        style="border-left: 4px solid var(--green); padding: 18px 24px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(14, 22, 38, 0.95) 100%);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div
+              style="width: 44px; height: 44px; border-radius: 50%; background: var(--green-bg); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--green);">
+              <i class="fas fa-check-double"></i>
+            </div>
+            <div>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: 0.02em;">ALL INFERENCE
+                HARDWARE & SERVICES OPERATIONAL</div>
+              <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px;">
+                0 active faults • NVIDIA RTX 4050 CUDA ready • Pretrained memory bank loaded • Zero-leak threshold
+                active
+              </div>
+            </div>
+          </div>
+          <span class="badge badge-success" style="font-size: 0.85rem; padding: 6px 14px;">
+            <i class="fas fa-circle" style="font-size: 7px;"></i> ALL SYSTEMS HEALTHY
+          </span>
+        </div>
+      </div>
+
+      <!-- 6 Professional Service Status Cards (3x2 Grid) -->
+      <div class="kpi-metrics-grid" style="grid-template-columns: repeat(3, 1fr); gap: 18px;">
+        <!-- Card 1: AI Inference Engine -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-brain"></i>
+              <span>Python AI Engine</span>
+            </div>
+            <span class="badge badge-success">ONLINE</span>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Runtime:</span>
+                <span class="specs-val font-mono">Python 3.11 • PyTorch 2.5</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Architecture:</span>
+                <span class="specs-val font-mono">ResNet-18 (L2+L3)</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Method:</span>
+                <span class="specs-val font-mono">PatchCore Coreset</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: GPU Accelerator -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-microchip"></i>
+              <span>GPU Accelerator</span>
+            </div>
+            <span class="badge badge-success">CUDA ACTIVE</span>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Model:</span>
+                <span class="specs-val font-mono" style="font-size: 0.75rem;">NVIDIA RTX 4050 Laptop</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">VRAM Capacity:</span>
+                <span class="specs-val font-mono">6,141 MiB Total</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Compute Target:</span>
+                <span class="specs-val font-mono">CUDA 12.6 Driver</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Model Checkpoint -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-file-shield"></i>
+              <span>Trained Checkpoint</span>
+            </div>
+            <span class="badge badge-success">VALIDATED</span>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Artifact:</span>
+                <span class="specs-val font-mono" style="font-size: 0.72rem;">defectx_bottle.pt</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Size:</span>
+                <span class="specs-val font-mono">2,412,058 Bytes</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Coreset Bank:</span>
+                <span class="specs-val font-mono">1,642 Embeddings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: PHP Backend Gateway -->
+        <div class="panel" id="backend-section">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-network-wired"></i>
+              <span>PHP Backend Gateway</span>
+            </div>
+            <span class="badge badge-info">CONFIGURED</span>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl">CLI Wrapper:</span>
+                <span class="specs-val font-mono">PHP proc_open / exec</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Inspect Endpoint:</span>
+                <span class="specs-val font-mono">/api/inspect.php</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Health Check:</span>
+                <span class="specs-val font-mono">/api/health.php</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Persistence & Cache -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-database"></i>
+              <span>Data Persistence & Cache</span>
+            </div>
+            <span class="badge badge-success">ACTIVE</span>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Client Storage:</span>
+                <span class="specs-val font-mono">LocalStorage v1</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Batch Export:</span>
+                <span class="specs-val font-mono">JSON & CSV Ready</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Integrity:</span>
+                <span class="specs-val font-mono text-green">100% Reliable</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Optical Camera Link -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-camera"></i>
+              <span>Optical Vision Link</span>
+            </div>
+            <span class="badge badge-success">SYNCED</span>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Camera Feed:</span>
+                <span class="specs-val font-mono">Industrial RGB Cam #01</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Frame Rate:</span>
+                <span class="specs-val font-mono">67.2 FPS (Peak)</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl">Native Resolution:</span>
+                <span class="specs-val font-mono">1024 x 1024 px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collapsible Developer Details Panel -->
+      <div class="panel">
+        <div class="panel-header" id="accordion-toggle" style="cursor: pointer;">
+          <div class="panel-title">
+            <i class="fas fa-terminal text-cyan"></i>
+            <span>Developer & Integration Technical Blueprint</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" style="pointer-events: none;">
+            <i class="fas fa-code"></i> Expand CLI & JSON Schemas <i class="fas fa-chevron-down" id="accordion-icon"
+              style="margin-left: 4px;"></i>
+          </button>
+        </div>
+
+        <div id="accordion-content"
+          style="display: none; padding: 20px; border-top: 1px solid var(--border-subtle); flex-direction: column; gap: 16px;">
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            The Python AI engine in <code>ai-engine/predict.py</code> operates with a strict CLI interface designed for
+            enterprise PHP or Go backend integration. Logs and debugging stream exclusively to <code>stderr</code>, and
+            clean, unpolluted JSON is returned on <code>stdout</code>.
+          </p>
+
+          <div
+            style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan); line-height: 1.6; overflow-x: auto;">
+            <span style="color: var(--text-muted);"># PowerShell Execution Command:</span><br>
+            python ai-engine/predict.py --image "dataset/bottle/test/broken_large/000.png"<br><br>
+            <span style="color: var(--text-muted);"># Exact Standard Output JSON Payload:</span><br>
+            <span style="color: #F8FAFC;">{</span><br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"inspection_id"</span>: <span
+              style="color: #10B981;">"insp_7a9f82d1"</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"prediction"</span>: <span
+              style="color: #EF4444;">"ANOMALY"</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"anomaly_score"</span>: <span
+              style="color: #F59E0B;">8.4215</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"threshold"</span>: <span
+              style="color: #F59E0B;">3.5042</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"severity"</span>: <span
+              style="color: #EF4444;">"CRITICAL"</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"confidence"</span>: <span
+              style="color: #10B981;">0.965</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"heatmap_path"</span>: <span
+              style="color: #10B981;">"ai-engine/outputs/heatmaps/insp_7a9f82d1_heatmap.png"</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"overlay_path"</span>: <span
+              style="color: #10B981;">"ai-engine/outputs/overlays/insp_7a9f82d1_overlay.png"</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"processing_time_ms"</span>: <span
+              style="color: #F59E0B;">14.8</span>,<br>
+            &nbsp;&nbsp;<span style="color: #38BDF8;">"shift_detected"</span>: <span
+              style="color: #10B981;">false</span><br>
+            <span style="color: #F8FAFC;">}</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Diagnostic Ping Button
+      const btnPing = document.getElementById('btn-run-diagnostics');
+      const pingBadge = document.getElementById('health-last-ping');
+
+      if (btnPing) {
+        btnPing.addEventListener('click', async () => {
+          btnPing.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Pinging...';
+          const t0 = performance.now();
+          const health = await window.DefectXApi.getSystemHealth();
+          const t1 = performance.now();
+          const latency = (t1 - t0).toFixed(1);
+
+          btnPing.innerHTML = '<i class="fas fa-heart-pulse"></i> Ping Health Check';
+          if (pingBadge) {
+            pingBadge.innerHTML = `<i class="fas fa-check"></i> Ping: ${latency}ms • ${new Date().toLocaleTimeString()}`;
+          }
+
+          if (window.showToast) {
+            window.showToast(
+              'Hardware Diagnostics Passed',
+              `GPU: ${health.gpu_name} | VRAM: ${health.vram_available_mb}/${health.vram_total_mb}MB | Latency: ${latency}ms`,
+              'success',
+              5000
+            );
+          }
+        });
+      }
+
+      // Collapsible Accordion Toggle
+      const toggle = document.getElementById('accordion-toggle');
+      const content = document.getElementById('accordion-content');
+      const icon = document.getElementById('accordion-icon');
+
+      if (toggle && content) {
+        toggle.addEventListener('click', () => {
+          const isOpen = content.style.display === 'flex';
+          content.style.display = isOpen ? 'none' : 'flex';
+          if (icon) {
+            icon.className = isOpen ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+/* ==========================================================================
+   DEFECTX AI - RESPONSIVE STYLESHEET (responsive.css)
+   ========================================================================== */
+
+/* Mobile Backdrop Overlay */
+.sidebar-overlay-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 95;
+  opacity: 0;
+  transition: opacity var(--trans-normal);
+}
+
+.sidebar-overlay-backdrop.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ==========================================================================
+   TABLETS & MEDIUM SCREENS (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 68px;
+  }
+
+  /* Automatically collapse sidebar on tablets */
+  .app-sidebar {
+    width: var(--sidebar-collapsed-width);
+  }
+
+  .brand-text-wrapper,
+  .nav-item-title,
+  .sidebar-telemetry-text {
+    display: none !important;
+  }
+
+  .nav-group-label {
+    text-align: center;
+    padding: 6px 0;
+    font-size: 0.55rem;
+  }
+
+  .nav-item-link {
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  .app-topbar {
+    left: var(--sidebar-collapsed-width);
+    padding: 0 18px;
+  }
+
+  .app-main-content {
+    margin-left: var(--sidebar-collapsed-width);
+    padding: 20px;
+  }
+
+  .kpi-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charts-split-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inspection-studio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   MOBILE PHONES (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .app-sidebar {
+    width: 250px !important;
+    transform: translateX(-100%);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .brand-text-wrapper,
+  .nav-item-title,
+  .sidebar-telemetry-text {
+    display: flex !important;
+  }
+
+  .nav-group-label {
+    text-align: left !important;
+    padding: 6px 12px 4px !important;
+    font-size: 0.65rem !important;
+  }
+
+  .nav-item-link {
+    justify-content: flex-start !important;
+    padding: 9px 12px !important;
+  }
+
+  .app-topbar {
+    left: 0 !important;
+    padding: 0 14px;
+  }
+
+  .mobile-menu-btn {
+    display: block !important;
+  }
+
+  .app-main-content {
+    margin-left: 0 !important;
+    padding: 16px 14px;
+  }
+
+  .topbar-search-box {
+    display: none;
+  }
+
+  .operator-profile-pill {
+    display: none;
+  }
+
+  .kpi-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .presets-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-drawer {
+    width: 100vw;
+  }
+}

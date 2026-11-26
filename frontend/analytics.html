@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Analytics — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link active" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">Workspace</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Analytics</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <div class="system-status-pill">
+          <div class="pulse-dot"></div>
+          <span>SYSTEM READY</span>
+        </div>
+        <a href="inspection.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-bolt"></i> Run Inspection
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-chart-pie text-cyan"></i> Quality Analytics & Model Telemetry
+          </h1>
+          <p>Statistical anomaly score separation, AUROC benchmarks, and hardware latency profiles.</p>
+        </div>
+        <div class="page-actions-group">
+          <span class="badge badge-cyan font-mono">Benchmark: MVTec Bottle</span>
+          <span class="badge badge-warning font-mono">Zero-Leak Threshold: 3.5042</span>
+        </div>
+      </div>
+
+      <!-- 5 KPI Cards Strip -->
+      <div class="kpi-metrics-grid" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Image AUROC</span>
+            <div class="kpi-card-icon green"><i class="fas fa-bullseye"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-green">1.0000</span>
+          </div>
+          <div class="kpi-card-footer">Zero false alerts on bottle test</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Pixel AUROC</span>
+            <div class="kpi-card-icon cyan"><i class="fas fa-fire"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-cyan">0.9995</span>
+          </div>
+          <div class="kpi-card-footer">Pixel-level localization overlap</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Precision</span>
+            <div class="kpi-card-icon blue"><i class="fas fa-check-double"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value">1.0000</span>
+          </div>
+          <div class="kpi-card-footer">100% positive predictive value</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Recall (Sensitivity)</span>
+            <div class="kpi-card-icon green"><i class="fas fa-radar"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-green">1.0000</span>
+          </div>
+          <div class="kpi-card-footer">Zero missed defect instances</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">False Positive Rate</span>
+            <div class="kpi-card-icon cyan"><i class="fas fa-shield"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-cyan">0.00%</span>
+          </div>
+          <div class="kpi-card-footer">Zero-leakage normal validation</div>
+        </div>
+      </div>
+
+      <!-- Charts Row 1: Score Separation + Defect Morphology -->
+      <div class="charts-split-grid">
+        <!-- Score Distribution Histogram -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-chart-column"></i>
+              <span>Anomaly Distance Score Separation (Normal vs Defect Distributions)</span>
+            </div>
+            <span class="badge badge-warning font-mono">Threshold = 3.5042</span>
+          </div>
+          <div class="panel-body">
+            <div class="chart-stage-wrapper" style="height: 290px;">
+              <canvas id="scoreDistChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Defect Morphology Distribution -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-pie-chart"></i>
+              <span>Defect Morphology Distribution</span>
+            </div>
+            <span class="badge badge-muted">MVTec Splits</span>
+          </div>
+          <div class="panel-body">
+            <div class="chart-stage-wrapper" style="height: 290px;">
+              <canvas id="defectTypeChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row 2: Latency Profile + Confusion Matrix -->
+      <div class="charts-split-grid" style="grid-template-columns: 1.1fr 0.9fr;">
+        <!-- Latency Profile -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-bolt"></i>
+              <span>Hardware Latency Profile (CUDA RTX 4050 vs CPU Baseline)</span>
+            </div>
+            <span class="badge badge-success font-mono">14.2ms GPU Avg</span>
+          </div>
+          <div class="panel-body">
+            <div class="chart-stage-wrapper" style="height: 270px;">
+              <canvas id="latencyChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confusion Matrix Card -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-table-cells"></i>
+              <span>Held-Out Test Confusion Matrix</span>
+            </div>
+            <span class="badge badge-cyan font-mono">N=83 Samples</span>
+          </div>
+          <div class="panel-body"
+            style="display: flex; flex-direction: column; gap: 12px; justify-content: center; height: calc(100% - 50px);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div
+                style="background: rgba(16, 185, 129, 0.12); border: 1px solid var(--green-border); border-radius: var(--radius-sm); padding: 14px; text-align: center;">
+                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">True Normal
+                  (Passed)</div>
+                <div style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: var(--green);">20
+                  / 20</div>
+                <div style="font-size: 0.7rem; color: var(--green);">100% Specificity</div>
+              </div>
+
+              <div
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 14px; text-align: center;">
+                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">False Alarm (Type
+                  I)</div>
+                <div
+                  style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: var(--text-muted);">
+                  0</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">0.0% False Positive</div>
+              </div>
+
+              <div
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 14px; text-align: center;">
+                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Missed Defect
+                  (Type II)</div>
+                <div
+                  style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: var(--text-muted);">
+                  0</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted);">0.0% False Negative</div>
+              </div>
+
+              <div
+                style="background: rgba(239, 68, 68, 0.12); border: 1px solid var(--red-border); border-radius: var(--radius-sm); padding: 14px; text-align: center;">
+                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">True Anomaly
+                  (Caught)</div>
+                <div style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: var(--red);">63 /
+                  63</div>
+                <div style="font-size: 0.7rem; color: var(--red);">100% Sensitivity</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; line-height: 1.4;">
+              Statistically defensible zero-defect leakage evaluation across broken_large, broken_small, and
+              contamination categories.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/analytics.js"></script>
+</body>
+
+</html>

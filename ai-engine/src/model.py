@@ -46,9 +46,11 @@ class DefectXEngine:
         mb_cfg = config.get("memory_bank", {})
         self.memory_bank = MemoryBank(
             coreset_sampling_ratio=mb_cfg.get("coreset_sampling_ratio", 0.1),
-            subsample_method=mb_cfg.get("subsample_method", "greedy_coreset"),
+            subsample_method=mb_cfg.get("subsample_method", "approximate_greedy"),
             device=self.device,
             chunk_size=mb_cfg.get("chunk_size", 512),
+            coreset_block_size=mb_cfg.get("coreset_block_size", 64),
+            proj_dim=mb_cfg.get("proj_dim", 64),
         )
 
         hm_cfg = config.get("heatmap", {})

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Center — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link active" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">Workspace</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Overview</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <div class="system-status-pill">
+          <div class="pulse-dot"></div>
+          <span>SYSTEM READY</span>
+        </div>
+
+        <a href="inspection.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-bolt"></i> Run Inspection
+        </a>
+
+        <div class="operator-profile-pill">
+          <div class="operator-avatar">QA</div>
+          <div class="operator-info">
+            <span class="operator-name">QA Operator</span>
+            <span class="operator-role">Station #01</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-gauge-high text-cyan"></i> Inspection Command Center
+          </h1>
+          <p>Monitor real-time manufacturing defect rates, anomaly alerts, and hardware inference status.</p>
+        </div>
+        <div class="page-actions-group">
+          <button class="btn btn-secondary btn-sm" id="btn-export-dashboard-json">
+            <i class="fas fa-download"></i> Export Telemetry
+          </button>
+          <a href="inspection.html" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> New Part Inspection
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Action Strip -->
+      <div class="quick-action-strip">
+        <span class="action-strip-label">Operations:</span>
+        <a href="inspection.html" class="btn btn-secondary btn-sm">
+          <i class="fas fa-camera text-cyan"></i> Inspect New Component
+        </a>
+        <a href="history.html" class="btn btn-secondary btn-sm">
+          <i class="fas fa-list-check text-blue"></i> View Historical Log
+        </a>
+        <a href="system-status.html" class="btn btn-secondary btn-sm">
+          <i class="fas fa-heart-pulse text-green"></i> Hardware Health Check
+        </a>
+        <button class="btn btn-secondary btn-sm" id="btn-reset-demo" style="margin-left: auto;">
+          <i class="fas fa-rotate text-amber"></i> Reset Benchmark Seed
+        </button>
+      </div>
+
+      <!-- 4 Top KPI Cards Grid -->
+      <div class="kpi-metrics-grid">
+        <!-- KPI 1 -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Total Inspected</span>
+            <div class="kpi-card-icon cyan"><i class="fas fa-boxes-stacked"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value" id="stat-total-count">--</span>
+            <span class="kpi-badge positive"><i class="fas fa-arrow-trend-up"></i> +14%</span>
+          </div>
+          <div class="kpi-card-footer">Benchmark & live parts ingested</div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Normal Passed</span>
+            <div class="kpi-card-icon green"><i class="fas fa-circle-check"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value" id="stat-normal-count">--</span>
+            <span class="kpi-badge positive" id="stat-normal-percent">--%</span>
+          </div>
+          <div class="kpi-card-footer">Conforming component yield</div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Anomalies Detected</span>
+            <div class="kpi-card-icon red"><i class="fas fa-triangle-exclamation"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-red" id="stat-defect-count">--</span>
+            <span class="kpi-badge negative" id="stat-defect-percent">--%</span>
+          </div>
+          <div class="kpi-card-footer">Unsupervised anomaly alerts</div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Mean Latency</span>
+            <div class="kpi-card-icon blue"><i class="fas fa-bolt"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value" id="stat-avg-latency">--</span>
+            <span class="kpi-badge positive"><i class="fas fa-microchip"></i> CUDA</span>
+          </div>
+          <div class="kpi-card-footer">ResNet-18 + Coreset search</div>
+        </div>
+      </div>
+
+      <!-- Charts Split Grid (Trend + Severity) -->
+      <div class="charts-split-grid">
+        <!-- Main Line Trend Chart -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-chart-line"></i>
+              <span>Inspection Volume & Anomaly Trends (7-Day Rolling)</span>
+            </div>
+            <span class="badge badge-cyan font-mono">Real-Time Aggregation</span>
+          </div>
+          <div class="panel-body">
+            <div class="chart-stage-wrapper">
+              <canvas id="dashboardTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Severity Donut Chart -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-chart-pie"></i>
+              <span>Defect Severity Breakdown</span>
+            </div>
+            <span class="badge badge-muted">Triage Tiers</span>
+          </div>
+          <div class="panel-body">
+            <div class="chart-stage-wrapper">
+              <canvas id="dashboardSeverityChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lower Section (Recent Table + Spotlight & Queue) -->
+      <div class="dashboard-main-grid">
+        <!-- Left: Recent Inspections Table -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-clock-rotate-left"></i>
+              <span>Recent Component Ingestions</span>
+            </div>
+            <a href="history.html" class="btn btn-secondary btn-sm">
+              View All History <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Inspection ID</th>
+                  <th>Component File</th>
+                  <th>Verdict</th>
+                  <th>Score / Thresh</th>
+                  <th>Severity</th>
+                  <th>Latency</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="recent-inspections-tbody">
+                <tr>
+                  <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                    <i class="fas fa-spinner fa-spin"></i> Streaming recent records...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Anomaly Spotlight + Queue Status -->
+        <div class="dashboard-right-col">
+          <!-- Anomaly Spotlight -->
+          <div class="anomaly-spotlight-panel" id="anomaly-spotlight-box">
+            <div class="spotlight-header">
+              <div class="spotlight-title">
+                <i class="fas fa-bullseye text-red"></i> Anomaly Spotlight
+              </div>
+              <span class="badge badge-danger">LATEST DEFECT</span>
+            </div>
+            <div class="spotlight-body">
+              <div class="spotlight-thumbnail-box">
+                <img id="spotlight-img" class="spotlight-thumb-img" src="assets/images/sample-broken-large-overlay.png"
+                  alt="Anomaly Overlay" onerror="this.src='assets/logo/defectx-icon.svg'">
+              </div>
+              <div class="spotlight-meta-list">
+                <div class="spotlight-meta-row">
+                  <span class="spotlight-meta-lbl">Specimen:</span>
+                  <span class="spotlight-meta-val" id="spotlight-filename">bottle_broken_large_001.png</span>
+                </div>
+                <div class="spotlight-meta-row">
+                  <span class="spotlight-meta-lbl">Peak Score:</span>
+                  <span class="spotlight-meta-val text-red" id="spotlight-score">8.4215 (Thresh 3.50)</span>
+                </div>
+                <div class="spotlight-meta-row">
+                  <span class="spotlight-meta-lbl">Severity:</span>
+                  <span class="badge badge-danger" id="spotlight-severity">CRITICAL</span>
+                </div>
+              </div>
+            </div>
+            <a href="results.html?id=insp_seed_001" id="spotlight-link" class="btn btn-danger btn-sm"
+              style="justify-content: center;">
+              <i class="fas fa-fire"></i> Inspect Anomaly Heatmap
+            </a>
+          </div>
+
+          <!-- Queue Status Card -->
+          <div class="queue-widget-card">
+            <div class="panel-title" style="font-size: 0.88rem;">
+              <i class="fas fa-conveyor-belt text-cyan"></i> Ingestion Stream & Hardware
+            </div>
+            <div class="specs-meta-table">
+              <div class="specs-meta-row">
+                <span class="specs-lbl"><i class="fas fa-camera"></i> Optical Sensor</span>
+                <span class="specs-val font-mono" style="color: var(--green);">ONLINE (67 FPS)</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl"><i class="fas fa-microchip"></i> GPU Pipeline</span>
+                <span class="specs-val">NVIDIA RTX 4050</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl"><i class="fas fa-sliders"></i> Zero-Leak Thresh</span>
+                <span class="specs-val">3.5042</span>
+              </div>
+              <div class="specs-meta-row">
+                <span class="specs-lbl"><i class="fas fa-circle-check"></i> Benchmark AUROC</span>
+                <span class="specs-val" style="color: var(--green);">1.0000 (100%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+
+</html>

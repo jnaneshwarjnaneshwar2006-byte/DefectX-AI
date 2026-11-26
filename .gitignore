@@ -1,0 +1,38 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Python environments
+.venv/
+venv/
+env/
+
+# Large AI datasets
+ai-engine/data/
+datasets/
+
+# Model checkpoints
+ai-engine/checkpoints/*.pt
+*.pth
+*.onnx
+
+# Temporary files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# IDE files
+.vscode/
+.idea/
+
+# Runtime inspection uploads and generated outputs
+frontend/uploads/*
+!frontend/uploads/.gitkeep
+results/heatmaps/

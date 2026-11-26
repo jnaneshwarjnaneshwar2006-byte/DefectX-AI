@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Model Insights — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link active" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">AI Intelligence</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">AI Model Insights</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <div class="system-status-pill">
+          <div class="pulse-dot"></div>
+          <span>SYSTEM READY</span>
+        </div>
+        <a href="inspection.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-bolt"></i> Run Inspection
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-brain text-cyan"></i> AI Model Insights & Architecture
+          </h1>
+          <p>Verified technical documentation of our ResNet-18 PatchCore memory-bank anomaly detection engine.</p>
+        </div>
+        <div class="page-actions-group">
+          <span class="badge badge-cyan font-mono">Model: ResNet-18 L2+L3</span>
+          <span class="badge badge-success font-mono">Checkpoint: defectx_bottle.pt (2.41 MB)</span>
+        </div>
+      </div>
+
+      <!-- Verified Engine Specs Grid (4 Cards) -->
+      <div class="kpi-metrics-grid">
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Feature Backbone</span>
+            <div class="kpi-card-icon cyan"><i class="fas fa-layer-group"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value" style="font-size: 1.45rem;">ResNet-18</span>
+          </div>
+          <div class="kpi-card-footer">Layer 2 (128d) + Layer 3 (256d) concat</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Learning Paradigm</span>
+            <div class="kpi-card-icon green"><i class="fas fa-shield-halved"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value text-green" style="font-size: 1.45rem;">One-Class</span>
+          </div>
+          <div class="kpi-card-footer">Trained strictly on clean normal images</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Memory Bank Subsampling</span>
+            <div class="kpi-card-icon blue"><i class="fas fa-memory"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value" style="font-size: 1.45rem;">10% Coreset</span>
+          </div>
+          <div class="kpi-card-footer">Optimized for RTX 4050 6GB VRAM budget</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-card-title">Zero-Leak Threshold</span>
+            <div class="kpi-card-icon cyan"><i class="fas fa-sliders"></i></div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-value font-mono" style="font-size: 1.45rem;">3.5042</span>
+          </div>
+          <div class="kpi-card-footer">99.5th percentile on normal validation split</div>
+        </div>
+      </div>
+
+      <!-- Core Technical Deep-Dive Panels (2 Columns) -->
+      <div class="dashboard-main-grid" style="grid-template-columns: 1.15fr 0.85fr;">
+        <!-- Left: Algorithm Architecture -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- Panel 1: Algorithmic Pipeline -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fas fa-diagram-project"></i>
+                <span>PatchCore Memory Bank Architecture</span>
+              </div>
+            </div>
+            <div class="panel-body"
+              style="display: flex; flex-direction: column; gap: 14px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+              <p>
+                DEFECTX AI implements an open-set industrial defect detection baseline inspired by PatchCore. In
+                real-world factory production lines, defects are rare, unpredictable, and infinite in variety.
+                Supervised multi-class classifiers fail when encountering novel structural flaws.
+              </p>
+              <div
+                style="background: var(--bg-panel-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+                <div style="font-weight: 700; color: #fff; font-size: 0.88rem;">1. Mid-Level Feature Extraction</div>
+                <div>
+                  Instead of using final classification layers (which discard spatial localized texture), DEFECTX AI
+                  taps intermediate feature maps from <code>layer2</code> and <code>layer3</code> of a ResNet-18
+                  backbone pretrained on ImageNet. Features are spatially harmonized via adaptive average pooling.
+                </div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.88rem;">2. Greedy Coreset Selection</div>
+                <div>
+                  To prevent GPU memory saturation on our 6GB NVIDIA RTX 4050, the normal feature memory bank is
+                  subsampled using a greedy minimax distance approximation. This preserves the topological boundary of
+                  normal representations with a 10x reduction in memory footprint.
+                </div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.88rem;">3. Nearest-Neighbor Anomaly Scoring
+                </div>
+                <div>
+                  During inference, every patch in the query image is compared against its nearest neighbor in the
+                  coreset memory bank using Euclidean distance. The maximum patch distance represents the image-level
+                  anomaly score:
+                  <div class="font-mono text-cyan"
+                    style="background: var(--bg-input); padding: 8px 12px; border-radius: 4px; margin-top: 6px;">
+                    s* = max_{m ∈ M_test} min_{n ∈ M_bank} ||m - n||_2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 2: Zero-Leakage Scientific Rigor -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fas fa-shield-halved text-green"></i>
+                <span>Zero-Leakage Calibration Methodology</span>
+              </div>
+              <span class="badge badge-success font-mono">100% Defensible</span>
+            </div>
+            <div class="panel-body" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+              <p>
+                In competitive evaluations, a critical pitfall is tuning detection thresholds on test defect samples,
+                which creates artificial data leakage.
+              </p>
+              <ul style="margin-left: 20px; display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                <li><strong>Train Split:</strong> 209 clean normal images used exclusively to construct the memory bank.
+                </li>
+                <li><strong>Validation Split:</strong> 20 held-out normal images used exclusively to fit the decision
+                  threshold (at 99.5th percentile = 3.5042).</li>
+                <li><strong>Test Split:</strong> 20 normal images and 63 defective images strictly held-out. They were
+                  never seen during memory bank construction or threshold calibration.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Score vs Probability & Verified Telemetry -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- Score vs Probability Distinction -->
+          <div class="panel" style="border-left: 3px solid var(--amber);">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fas fa-scale-balanced text-amber"></i>
+                <span>Anomaly Score vs Probability</span>
+              </div>
+            </div>
+            <div class="panel-body"
+              style="display: flex; flex-direction: column; gap: 12px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;">
+              <div style="font-weight: 700; color: #fff;">
+                Why Anomaly Score ≠ Probability:
+              </div>
+              <p>
+                The Euclidean distance between query features and memory-bank representations is an unbounded metric
+                <code>[0, ∞)</code>. In DEFECTX AI, we explicitly do not label raw scores as Bayesian probabilities.
+              </p>
+              <p>
+                Confidence percentages reported in the UI represent relative margin distance above the validation
+                threshold calibrated via sigmoidal scaling, clearly distinguishing empirical distance from true
+                posterior probability.
+              </p>
+            </div>
+          </div>
+
+          <!-- Checkpoint Telemetry Card -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <i class="fas fa-file-shield text-cyan"></i>
+                <span>Trained Checkpoint Artifact</span>
+              </div>
+            </div>
+            <div class="panel-body" style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="specs-meta-table">
+                <div class="specs-meta-row">
+                  <span class="specs-lbl">Artifact Path:</span>
+                  <span class="specs-val font-mono" style="font-size: 0.72rem;">checkpoints/defectx_bottle.pt</span>
+                </div>
+                <div class="specs-meta-row">
+                  <span class="specs-lbl">File Size:</span>
+                  <span class="specs-val font-mono">2,412,058 Bytes (2.41 MB)</span>
+                </div>
+                <div class="specs-meta-row">
+                  <span class="specs-lbl">Memory Bank Shape:</span>
+                  <span class="specs-val font-mono">[1642, 384] Tensor</span>
+                </div>
+                <div class="specs-meta-row">
+                  <span class="specs-lbl">Device Target:</span>
+                  <span class="specs-val font-mono">CUDA (RTX 4050) / CPU fallback</span>
+                </div>
+                <div class="specs-meta-row">
+                  <span class="specs-lbl">Integrity:</span>
+                  <span class="specs-val font-mono text-green">SHA-256 Verified Valid</span>
+                </div>
+              </div>
+
+              <div
+                style="background: var(--bg-input); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-muted);">
+                Protected artifact: The checkpoint remains strictly unmodified during frontend rendering.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -12,14 +12,18 @@ class MemoryBank:
     def __init__(
         self,
         coreset_sampling_ratio: float = 0.1,
-        subsample_method: str = "greedy_coreset",
+        subsample_method: str = "approximate_greedy",
         device: torch.device = torch.device("cpu"),
         chunk_size: int = 512,
+        coreset_block_size: int = 64,
+        proj_dim: int = 64,
     ):
         self.coreset_sampling_ratio = coreset_sampling_ratio
         self.subsample_method = subsample_method
         self.device = device
         self.chunk_size = chunk_size
+        self.coreset_block_size = coreset_block_size
+        self.proj_dim = proj_dim
         self.features: Optional[torch.Tensor] = None
 
     def fit(self, features: torch.Tensor, seed: int = 42) -> None:
@@ -40,25 +44,221 @@ class MemoryBank:
             return
 
         if self.subsample_method == "random":
-            rng = torch.Generator().manual_seed(seed)
+            rng = torch.Generator(device="cpu").manual_seed(seed)
             perm = torch.randperm(num_samples, generator=rng)[:target_size]
             self.features = features[perm].to(self.device).float()
-        elif self.subsample_method == "greedy_coreset":
-            coreset_indices = self._greedy_k_center(features, target_size, seed=seed)
+        elif self.subsample_method in ("approximate_greedy", "greedy_coreset", "batched_greedy"):
+            coreset_indices = self._batched_greedy_k_center(
+                features, target_size, seed=seed, block_size=self.coreset_block_size, proj_dim=self.proj_dim
+            )
+            self.features = features[coreset_indices].to(self.device).float()
+        elif self.subsample_method == "exact_greedy":
+            coreset_indices = self._exact_greedy_k_center(
+                features, target_size, seed=seed, proj_dim=self.proj_dim
+            )
+            self.features = features[coreset_indices].to(self.device).float()
+        elif self.subsample_method == "legacy_greedy":
+            coreset_indices = self._legacy_greedy_k_center(
+                features, target_size, seed=seed
+            )
             self.features = features[coreset_indices].to(self.device).float()
         else:
-            raise ValueError(f"Unknown subsample method '{self.subsample_method}'. Choose 'greedy_coreset' or 'random'.")
+            raise ValueError(
+                f"Unknown subsample method '{self.subsample_method}'. "
+                f"Choose 'approximate_greedy', 'greedy_coreset', 'exact_greedy', 'legacy_greedy', or 'random'."
+            )
 
-    def _greedy_k_center(self, features: torch.Tensor, target_size: int, seed: int = 42) -> torch.Tensor:
+    def _chunked_project(
+        self,
+        features: torch.Tensor,
+        proj_matrix: torch.Tensor,
+        compute_device: torch.device,
+        chunk_size: int = 65536,
+    ) -> torch.Tensor:
+        """Projects high-dimensional features onto lower dimension in chunks to bound memory."""
+        N = features.shape[0]
+        if N <= chunk_size or features.device == compute_device:
+            return torch.matmul(features.to(compute_device).float(), proj_matrix)
+
+        projected_chunks = []
+        for start in range(0, N, chunk_size):
+            end = min(start + chunk_size, N)
+            sub = features[start:end].to(compute_device).float()
+            projected_chunks.append(torch.matmul(sub, proj_matrix))
+        return torch.cat(projected_chunks, dim=0)
+
+    def _batched_greedy_k_center(
+        self,
+        features: torch.Tensor,
+        target_size: int,
+        seed: int = 42,
+        block_size: int = 64,
+        proj_dim: int = 64,
+    ) -> torch.Tensor:
         """
-        Greedy k-Center / Minimax coreset selection.
-        Iteratively selects the point that maximizes the minimum distance to existing coreset.
-        Uses random projection if dimension is high to accelerate selection.
+        Fast memory-efficient approximate greedy k-center coreset selection.
+        - Uses random projection for dimension reduction (if D > 64 and N > 5000).
+        - Computes on self.device (utilizing CUDA GPU acceleration if available).
+        - Uses squared Euclidean distance to eliminate square root overhead.
+        - Employs batched matrix-matrix GEMM (torch.mm) to update N distances in parallel.
+        - Employs local greedy selection within top-k candidates to prevent center clustering.
+        - Chunked fallback to guarantee bounded memory footprint (< 300 MB).
         """
+        num_samples = features.shape[0]
+        compute_device = self.device
+
+        # 1. Random projection for fast distance computation
+        if features.shape[1] > proj_dim and num_samples > 5000:
+            rng = torch.Generator(device="cpu").manual_seed(seed)
+            proj_matrix = torch.randn((features.shape[1], proj_dim), generator=rng)
+            proj_matrix = F.normalize(proj_matrix, p=2, dim=0).to(compute_device)
+            work_features = self._chunked_project(features, proj_matrix, compute_device)
+        else:
+            work_features = features.to(compute_device).float()
+
+        # 2. Precompute squared L2 norms: ||x_i||^2
+        x_norms_sq = (work_features ** 2).sum(dim=1)
+
+        selected_indices: List[int] = []
+        rng = torch.Generator(device="cpu").manual_seed(seed)
+        first_idx = torch.randint(0, num_samples, (1,), generator=rng).item()
+        selected_indices.append(first_idx)
+
+        # Initial squared distances from first center
+        c1 = work_features[first_idx]
+        min_dist_sq = x_norms_sq - 2 * torch.mv(work_features, c1) + x_norms_sq[first_idx]
+        torch.clamp_min_(min_dist_sq, 0.0)
+        min_dist_sq[first_idx] = 0.0
+
+        # 3. Batched greedy selection loop
+        B = min(block_size, target_size)
+        while len(selected_indices) < target_size:
+            batch_needed = min(B, target_size - len(selected_indices))
+
+            if batch_needed == 1:
+                next_idx = torch.argmax(min_dist_sq).item()
+                selected_indices.append(next_idx)
+                c = work_features[next_idx]
+                c_norm = x_norms_sq[next_idx]
+                dist_sq = x_norms_sq - 2 * torch.mv(work_features, c) + c_norm
+                torch.clamp_min_(dist_sq, 0.0)
+                min_dist_sq = torch.minimum(min_dist_sq, dist_sq)
+                min_dist_sq[next_idx] = 0.0
+                continue
+
+            # Pick candidate pool from points with the largest current min_dist_sq
+            pool_size = min(num_samples - len(selected_indices), max(batch_needed * 4, 128))
+            _, topk_indices = torch.topk(min_dist_sq, k=pool_size)
+
+            cand_feats = work_features[topk_indices]
+            cand_dist_sq = min_dist_sq[topk_indices].clone()
+
+            # Local greedy selection within candidate pool
+            batch_selected_local: List[int] = []
+            for _ in range(batch_needed):
+                local_idx = torch.argmax(cand_dist_sq).item()
+                batch_selected_local.append(local_idx)
+                new_pt = cand_feats[local_idx]
+                d_sq = torch.sum((cand_feats - new_pt) ** 2, dim=1)
+                cand_dist_sq = torch.minimum(cand_dist_sq, d_sq)
+                cand_dist_sq[local_idx] = 0.0
+
+            new_centers_idx = topk_indices[batch_selected_local]
+            selected_indices.extend(new_centers_idx.tolist())
+
+            # Global distance update using GEMM
+            new_centers = work_features[new_centers_idx]
+            new_c_norms = x_norms_sq[new_centers_idx]
+
+            self._update_min_dist_sq_batched(
+                min_dist_sq, work_features, x_norms_sq, new_centers, new_c_norms
+            )
+            min_dist_sq[new_centers_idx] = 0.0
+
+        return torch.tensor(selected_indices[:target_size], dtype=torch.long, device="cpu")
+
+    def _update_min_dist_sq_batched(
+        self,
+        min_dist_sq: torch.Tensor,
+        work_features: torch.Tensor,
+        x_norms_sq: torch.Tensor,
+        new_centers: torch.Tensor,
+        new_c_norms: torch.Tensor,
+        chunk_size: int = 131072,
+    ) -> None:
+        """
+        Updates min_dist_sq in-place using matrix multiplication (torch.mm),
+        chunked along N to keep intermediate memory strictly under 64 MB.
+        """
+        N = work_features.shape[0]
+
+        if N <= chunk_size:
+            block_dist_sq = x_norms_sq[:, None] - 2 * torch.mm(work_features, new_centers.T) + new_c_norms[None, :]
+            torch.clamp_min_(block_dist_sq, 0.0)
+            min_new, _ = torch.min(block_dist_sq, dim=1)
+            min_dist_sq.copy_(torch.minimum(min_dist_sq, min_new))
+        else:
+            for start_idx in range(0, N, chunk_size):
+                end_idx = min(start_idx + chunk_size, N)
+                sub_feats = work_features[start_idx:end_idx]
+                sub_norms = x_norms_sq[start_idx:end_idx, None]
+                block_dist_sq = sub_norms - 2 * torch.mm(sub_feats, new_centers.T) + new_c_norms[None, :]
+                torch.clamp_min_(block_dist_sq, 0.0)
+                min_new, _ = torch.min(block_dist_sq, dim=1)
+                min_dist_sq[start_idx:end_idx] = torch.minimum(min_dist_sq[start_idx:end_idx], min_new)
+
+    def _exact_greedy_k_center(
+        self,
+        features: torch.Tensor,
+        target_size: int,
+        seed: int = 42,
+        proj_dim: int = 64,
+    ) -> torch.Tensor:
+        """
+        Exact sequential greedy k-center with squared Euclidean distances and matrix-vector operations.
+        Runs on self.device (GPU accelerated if available).
+        """
+        num_samples = features.shape[0]
+        compute_device = self.device
+
+        if features.shape[1] > proj_dim and num_samples > 5000:
+            rng = torch.Generator(device="cpu").manual_seed(seed)
+            proj_matrix = torch.randn((features.shape[1], proj_dim), generator=rng)
+            proj_matrix = F.normalize(proj_matrix, p=2, dim=0).to(compute_device)
+            work_features = self._chunked_project(features, proj_matrix, compute_device)
+        else:
+            work_features = features.to(compute_device).float()
+
+        x_norms_sq = (work_features ** 2).sum(dim=1)
+
+        selected_indices: List[int] = []
+        rng = torch.Generator(device="cpu").manual_seed(seed)
+        first_idx = torch.randint(0, num_samples, (1,), generator=rng).item()
+        selected_indices.append(first_idx)
+
+        c1 = work_features[first_idx]
+        min_dist_sq = x_norms_sq - 2 * torch.mv(work_features, c1) + x_norms_sq[first_idx]
+        torch.clamp_min_(min_dist_sq, 0.0)
+        min_dist_sq[first_idx] = 0.0
+
+        for _ in range(1, target_size):
+            next_idx = torch.argmax(min_dist_sq).item()
+            selected_indices.append(next_idx)
+
+            c = work_features[next_idx]
+            c_norm = x_norms_sq[next_idx]
+            dist_sq = x_norms_sq - 2 * torch.mv(work_features, c) + c_norm
+            torch.clamp_min_(dist_sq, 0.0)
+            min_dist_sq = torch.minimum(min_dist_sq, dist_sq)
+            min_dist_sq[next_idx] = 0.0
+
+        return torch.tensor(selected_indices, dtype=torch.long, device="cpu")
+
+    def _legacy_greedy_k_center(self, features: torch.Tensor, target_size: int, seed: int = 42) -> torch.Tensor:
+        """Original unoptimized greedy k-center using torch.norm() in a loop (preserved for comparison)."""
         num_samples = features.shape[0]
         device = features.device
 
-        # If features are very large, randomly project for fast coreset distance computation
         if features.shape[1] > 64 and num_samples > 5000:
             rng = torch.Generator(device=device).manual_seed(seed)
             proj_dim = 64
@@ -73,10 +273,8 @@ class MemoryBank:
         first_idx = torch.randint(0, num_samples, (1,), generator=rng, device=device).item()
         selected_indices.append(first_idx)
 
-        # Min distances from each point to current coreset
         min_distances = torch.norm(work_features - work_features[first_idx], dim=1)
 
-        # Greedy selection loop
         for _ in range(1, target_size):
             next_idx = torch.argmax(min_distances).item()
             selected_indices.append(next_idx)

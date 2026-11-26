@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "analysis_type": "validation_only_threshold_sensitivity",
+    "validation_sample_count": 180,
+    "margin_multiplier": 1.05,
+    "score_statistics": {
+      "mean": 0.9621397256851196,
+      "std": 0.1477603167295456,
+      "min": 0.7859210968017578,
+      "max": 1.5126798152923584
+    },
+    "integrity_guarantee": "Computed exclusively on held-out normal validation samples. Zero test defect samples or test labels used.",
+    "checkpoint_path": "C:\\Users\\Jnaneshwar B A\\OneDrive\\project\\DefectX-AI\\ai-engine\\checkpoints\\defectx_candle.pt",
+    "category": "candle",
+    "dataset_root": "C:\\Users\\Jnaneshwar B A\\OneDrive\\project\\DefectX-AI\\ai-engine\\data\\visa",
+    "device": "cuda:0"
+  },
+  "percentile_analysis": [
+    {
+      "percentile": 95.0,
+      "raw_threshold": 1.2417694330215454,
+      "raw_validation_false_positives": 9,
+      "raw_empirical_fpr": 0.05,
+      "raw_empirical_fpr_pct": 5.0,
+      "raw_fpr_95_ci": [
+        0.0265,
+        0.0923
+      ],
+      "raw_fpr_95_ci_pct": [
+        2.65,
+        9.23
+      ],
+      "margin_threshold": 1.3038579046726226,
+      "margin_validation_false_positives": 6,
+      "margin_empirical_fpr": 0.03333333333333333,
+      "margin_empirical_fpr_pct": 3.33,
+      "margin_fpr_95_ci": [
+        0.0154,
+        0.0708
+      ],
+      "margin_fpr_95_ci_pct": [
+        1.54,
+        7.08
+      ]
+    },
+    {
+      "percentile": 97.0,
+      "raw_threshold": 1.2996572256088257,
+      "raw_validation_false_positives": 6,
+      "raw_empirical_fpr": 0.03333333333333333,
+      "raw_empirical_fpr_pct": 3.33,
+      "raw_fpr_95_ci": [
+        0.0154,
+        0.0708
+      ],
+      "raw_fpr_95_ci_pct": [
+        1.54,
+        7.08
+      ],
+      "margin_threshold": 1.364640086889267,
+      "margin_validation_false_positives": 4,
+      "margin_empirical_fpr": 0.022222222222222223,
+      "margin_empirical_fpr_pct": 2.22,
+      "margin_fpr_95_ci": [
+        0.0087,
+        0.0557
+      ],
+      "margin_fpr_95_ci_pct": [
+        0.87,
+        5.57
+      ]
+    },
+    {
+      "percentile": 99.0,
+      "raw_threshold": 1.4856888055801392,
+      "raw_validation_false_positives": 2,
+      "raw_empirical_fpr": 0.011111111111111112,
+      "raw_empirical_fpr_pct": 1.11,
+      "raw_fpr_95_ci": [
+        0.0031,
+        0.0396
+      ],
+      "raw_fpr_95_ci_pct": [
+        0.31,
+        3.96
+      ],
+      "margin_threshold": 1.5599732458591462,
+      "margin_validation_false_positives": 0,
+      "margin_empirical_fpr": 0.0,
+      "margin_empirical_fpr_pct": 0.0,
+      "margin_fpr_95_ci": [
+        0.0,
+        0.0209
+      ],
+      "margin_fpr_95_ci_pct": [
+        0.0,
+        2.09
+      ]
+    }
+  ],
+  "sample_size_confidence_limitations": {
+    "validation_sample_count": 180,
+    "single_sample_resolution_pct": 0.5556,
+    "rule_of_three_zero_fp_upper_bound_pct": 1.6667,
+    "statistical_limitations": [
+      "Small Sample Discrete Resolution: With N=180 validation samples, each observation represents 0.56% of the empirical distribution. Fractional FPRs between 0% and 0.56% cannot be resolved.",
+      "Upper Bound on Zero False Positives: Observing 0 false positives at 99% + margin only establishes with 95% confidence that the true normal FPR is below ~1.67% (Rule of Three), not identically 0.0%.",
+      "Distribution Shift Vulnerability: Normal variance under unobserved lighting, lens drift, or supplier batch variation can shift the empirical distribution and inflate operational FPR.",
+      "Calibration vs Recall Disclaimer: This is a calibration analysis. Lowering thresholds increases theoretical sensitivity, but cannot be claimed to improve defect recall without an independent, separately documented test evaluation."
+    ]
+  }
+}

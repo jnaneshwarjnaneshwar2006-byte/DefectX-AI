@@ -7,7 +7,7 @@ project:
 dataset:
   root_dir: "data/mvtec"        # Configurable dataset root path (e.g., path to organiser dataset)
   category: "bottle"           # Target category or null/empty if flat dataset
-  adapter: "auto"              # Dataset adapter: "auto", "mvtec", "custom"
+  adapter: "auto"              # Dataset adapter: "auto", "mvtec", "visa", "custom"
   normal_class_name: "good"    # Label/folder name for normal samples ("good", "normal", "ok")
   train_dir: null              # Optional custom subpath for training data (e.g. "train")
   test_dir: null               # Optional custom subpath for test data (e.g. "test")
@@ -28,7 +28,8 @@ model:
 
 memory_bank:
   coreset_sampling_ratio: 0.1  # Subsample 10% of patch features for fast search & low memory
-  subsample_method: "greedy_coreset" # "greedy_coreset" or "random"
+  subsample_method: "approximate_greedy" # "approximate_greedy", "greedy_coreset", "exact_greedy", "legacy_greedy", "random"
+  coreset_block_size: 64        # Number of centers selected per batch in approximate greedy
   distance_metric: "euclidean"
   device_distance: "cuda"       # "cuda" or "cpu"
   chunk_size: 512               # Chunk size for distance computation to prevent VRAM spikes

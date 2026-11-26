@@ -15,6 +15,8 @@ def evaluate(args):
     logger.info("=== DEFECTX AI - Starting Model Evaluation ===")
 
     config = load_config(args.config)
+    if getattr(args, "dataset_format", None):
+        config.setdefault("dataset", {})["adapter"] = args.dataset_format
     prefer_cuda = (args.device.lower() != "cpu")
     device = get_device(prefer_cuda=prefer_cuda)
 
@@ -93,5 +95,6 @@ if __name__ == "__main__":
     parser.add_argument("--category", type=str, default=None, help="Category name")
     parser.add_argument("--output-dir", type=str, default="results", help="Directory for reports and plots")
     parser.add_argument("--device", type=str, default="cuda", choices=["cuda", "cpu"], help="Device to use")
+    parser.add_argument("--dataset-format", type=str, default=None, choices=["auto", "mvtec", "visa", "custom", "folder"], help="Dataset format/adapter")
     args = parser.parse_args()
     evaluate(args)

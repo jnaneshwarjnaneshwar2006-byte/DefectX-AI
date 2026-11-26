@@ -17,6 +17,9 @@ def train(args):
     seed = config.get("dataset", {}).get("seed", 42)
     set_seed(seed)
 
+    if getattr(args, "dataset_format", None):
+        config.setdefault("dataset", {})["adapter"] = args.dataset_format
+
     # Device selection (CUDA on RTX 4050 with automatic fallback)
     prefer_cuda = (args.device.lower() != "cpu")
     device = get_device(prefer_cuda=prefer_cuda)
@@ -82,5 +85,6 @@ if __name__ == "__main__":
     parser.add_argument("--category", type=str, default=None, help="Target category (default: bottle)")
     parser.add_argument("--checkpoint-dir", type=str, default="checkpoints", help="Output directory for checkpoints")
     parser.add_argument("--device", type=str, default="cuda", choices=["cuda", "cpu"], help="Computation device")
+    parser.add_argument("--dataset-format", type=str, default=None, choices=["auto", "mvtec", "visa", "custom", "folder"], help="Dataset format/adapter")
     args = parser.parse_args()
     train(args)

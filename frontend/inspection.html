@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live AI Inspection — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/inspection.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link active" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">Workspace</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Live Inspection</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <div class="system-status-pill">
+          <div class="pulse-dot"></div>
+          <span>SYSTEM READY</span>
+        </div>
+
+        <a href="history.html" class="btn btn-secondary btn-sm">
+          <i class="fas fa-history"></i> Log
+        </a>
+
+        <div class="operator-profile-pill">
+          <div class="operator-avatar">QA</div>
+          <div class="operator-info">
+            <span class="operator-name">QA Operator</span>
+            <span class="operator-role">Station #01</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-crosshairs text-cyan"></i> Live AI Inspection
+          </h1>
+          <p>Real-time machine vision defect detection with ResNet-18 patch embeddings and RTX 4050 CUDA memory banks.
+          </p>
+        </div>
+        <div class="page-actions-group">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge badge-cyan font-mono" style="padding: 6px 12px; font-size: 0.85rem;">
+              <i class="fas fa-wine-bottle"></i> Product: MVTec Bottle
+            </span>
+          </div>
+          <span class="badge badge-cyan font-mono"><i class="fas fa-microchip"></i> ResNet-18 L2+L3</span>
+          <span class="badge badge-warning font-mono" id="badge-active-threshold">Thresh: 0.6366</span>
+        </div>
+      </div>
+
+      <!-- Inspection Studio 2-Column Grid -->
+      <div class="inspection-studio-grid">
+        <!-- Left Column: Input Modes (Mobile Camera + File Library) -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+
+          <!-- Mode Switch Tabs -->
+          <div class="mode-switch-container">
+            <button type="button" class="mode-tab-btn active" id="tab-mode-camera">
+              <i class="fas fa-camera"></i> Live Optical Camera
+            </button>
+            <button type="button" class="mode-tab-btn" id="tab-mode-upload">
+              <i class="fas fa-folder-open"></i> Upload & Benchmark Library
+            </button>
+          </div>
+
+          <!-- Section 1: Camera Workflow -->
+          <div id="section-camera-mode" class="camera-card">
+            <div class="panel-header" style="padding: 0 0 10px 0;">
+              <div class="panel-title">
+                <i class="fas fa-camera text-cyan"></i> Live Inspection Camera Feed
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <select id="camera-device-select"
+                  style="display: none; background: rgba(13, 24, 46, 0.9); border: 1px solid rgba(0, 242, 254, 0.3); color: #fff; border-radius: 4px; padding: 4px 8px; font-size: 0.75rem; font-family: inherit; outline: none; cursor: pointer;"></select>
+                <span class="badge badge-cyan font-mono" id="camera-feed-badge">SENSOR AUTO</span>
+              </div>
+            </div>
+
+            <!-- Live Camera Viewport -->
+            <div class="camera-viewport-box" id="camera-viewport">
+              <video id="camera-video" playsinline autoplay muted class="camera-video-elem"
+                style="display: none;"></video>
+
+              <!-- Optical Viewfinder Overlay -->
+              <div class="viewfinder-reticle" id="camera-reticle" style="display: none;">
+                <div class="reticle-corner top-left"></div>
+                <div class="reticle-corner top-right"></div>
+                <div class="reticle-corner bottom-left"></div>
+                <div class="reticle-corner bottom-right"></div>
+                <div class="viewfinder-target"></div>
+              </div>
+
+              <!-- Live Status Pill -->
+              <div class="camera-status-pill" id="camera-status-pill">
+                <i class="fas fa-circle text-muted" id="camera-status-dot"></i>
+                <span id="camera-status-text">CAMERA STANDBY</span>
+              </div>
+
+              <!-- Standby & Permission Prompt Card -->
+              <div class="camera-prompt-card" id="camera-prompt-card">
+                <div class="camera-prompt-icon">
+                  <i class="fas fa-video"></i>
+                </div>
+                <div style="font-weight: 700; font-size: 1.05rem; color: #fff;">Optical Camera Standby</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); max-width: 340px; margin: 0;">
+                  Click below to activate your laptop webcam or mobile camera for real-time MVTec Bottle defect
+                  inspection.
+                </p>
+                <button type="button" class="btn btn-primary" id="btn-start-camera"
+                  style="padding: 12px 24px; font-size: 0.95rem;">
+                  <i class="fas fa-camera"></i> Enable Camera
+                </button>
+                <div id="camera-error-banner" class="camera-error-banner" style="display: none;">
+                  <i class="fas fa-circle-exclamation"></i>
+                  <span id="camera-error-text">Camera permission was denied or device not supported.</span>
+                </div>
+              </div>
+
+              <!-- Off-screen Canvas for Snapshot Capture -->
+              <canvas id="camera-canvas" style="display: none;"></canvas>
+            </div>
+
+            <!-- Live Camera Control Buttons (Active when streaming) -->
+            <div class="camera-controls-bar" id="camera-live-controls" style="display: none;">
+              <button type="button" class="btn btn-primary btn-capture-main" id="btn-capture-frame">
+                <i class="fas fa-circle-dot"></i> CAPTURE IMAGE
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-switch-camera" title="Switch Camera">
+                <i class="fas fa-camera-rotate"></i> Switch Camera
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-stop-camera" title="Turn Camera Off">
+                <i class="fas fa-power-off"></i> Turn Camera Off
+              </button>
+            </div>
+
+            <!-- Captured Frame Review Stage (Active when frame is captured) -->
+            <div id="captured-review-area" style="display: none; flex-direction: column; gap: 14px;">
+              <div class="captured-preview-box">
+                <img id="captured-preview-img" class="captured-img-view" alt="Original Captured Specimen">
+                <div class="captured-telemetry-strip">
+                  <div><strong>Resolution:</strong> <span id="captured-dims">-- x -- px</span></div>
+                  <div><strong>File Size:</strong> <span id="captured-size">-- KB</span></div>
+                  <div><strong>Source:</strong> <span class="text-cyan">Optical Sensor</span></div>
+                </div>
+              </div>
+
+              <!-- Action Bar for Captured Frame -->
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary" id="btn-retake-frame"
+                  style="flex: 1; min-height: 48px; justify-content: center;">
+                  <i class="fas fa-arrow-rotate-left"></i> Retake Image
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-scan-frame"
+                  style="flex: 2; min-height: 48px; justify-content: center; background: linear-gradient(135deg, var(--cyan), #0284c7); font-size: 1rem;">
+                  <i class="fas fa-bolt"></i> SCAN IMAGE
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Local File Upload & Presets (Alternative Mode) -->
+          <div id="section-upload-mode" style="display: none; flex-direction: column; gap: 20px;">
+            <!-- Dropzone Container -->
+            <div class="dropzone-container">
+              <div class="panel-title">
+                <i class="fas fa-cloud-arrow-up text-cyan"></i> Optical Image Ingestion
+              </div>
+
+              <div class="dropzone-interactive" id="inspection-dropzone">
+                <input type="file" id="file-input-elem" accept="image/png,image/jpeg,image/webp,image/bmp"
+                  style="display: none;">
+                <div class="dropzone-circle-icon">
+                  <i class="fas fa-camera"></i>
+                </div>
+                <div class="dropzone-main-text">Drag & Drop Optical Capture Here</div>
+                <div class="dropzone-sub-text">
+                  Accepts high-resolution RGB frames (.PNG, .JPG, .WEBP, .BMP) up to 15MB.
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-browse-file" style="margin-top: 4px;">
+                  <i class="fas fa-folder-open"></i> Browse Local Files
+                </button>
+                <div class="format-badges-row">
+                  <span class="badge badge-muted">RGB 224x224 Normalized</span>
+                  <span class="badge badge-muted">PyTorch CUDA Tensor</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- INDUSTRIAL SPECIMEN LIBRARY (14 Genuine Samples: Bottle, Candle, Wood) -->
+            <div class="panel" id="specimen-library-panel">
+              <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+                <div class="panel-title">
+                  <i class="fas fa-boxes-stacked text-cyan"></i> INDUSTRIAL SPECIMEN LIBRARY
+                </div>
+                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                  <span class="badge badge-cyan font-mono" id="stat-total-specimens">14 Total</span>
+                  <span class="badge badge-success font-mono" id="stat-normal-specimens">6 Normal</span>
+                  <span class="badge badge-danger font-mono" id="stat-defective-specimens">8 Defective</span>
+                </div>
+              </div>
+              <div class="panel-body" style="padding-top: 14px; display: flex; flex-direction: column; gap: 14px;">
+                <!-- Category Tabs (Bottle, Candle, Wood) -->
+                <div class="mode-switch-container" style="margin-bottom: 0;">
+                  <button type="button" class="mode-tab-btn active" id="tab-cat-bottle" data-category="bottle">
+                    <i class="fas fa-wine-bottle"></i> Bottle (6)
+                  </button>
+                  <button type="button" class="mode-tab-btn" id="tab-cat-candle" data-category="candle">
+                    <i class="fas fa-fire"></i> Candle (4)
+                  </button>
+                  <button type="button" class="mode-tab-btn" id="tab-cat-wood" data-category="wood">
+                    <i class="fas fa-tree"></i> Wood (4)
+                  </button>
+                </div>
+
+                <!-- Live Status Banner for Selected Category -->
+                <div id="category-status-banner"
+                  style="background: rgba(8, 13, 23, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                  <div id="category-status-desc">
+                    <span class="text-cyan font-mono"><strong>Active Inspection:</strong> MVTec Bottle Checkpoint
+                      (ai-engine/checkpoints/defectx_bottle.pt)</span>
+                  </div>
+                  <span class="badge badge-success font-mono" id="category-ai-badge">AI INFERENCE READY</span>
+                </div>
+
+                <!-- Filter Controls Row -->
+                <div
+                  style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                  <div class="segmented-control" id="specimen-filter-tabs" style="flex-wrap: wrap;">
+                    <button type="button" class="segmented-btn active" data-filter="all">All</button>
+                    <button type="button" class="segmented-btn" data-filter="normal">Normal</button>
+                    <button type="button" class="segmented-btn" data-filter="defective">Defective</button>
+                  </div>
+                  <div style="position: relative; min-width: 160px; flex: 1; max-width: 240px;">
+                    <input type="text" id="specimen-search-input" placeholder="Search ID or defect..."
+                      style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: #fff; font-size: 0.78rem; padding: 6px 10px 6px 28px; outline: none;">
+                    <i class="fas fa-search"
+                      style="position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--text-muted);"></i>
+                  </div>
+                </div>
+
+                <!-- Specimen Grid Container (Scrollable Responsive Grid) -->
+                <div class="specimen-library-grid" id="specimen-library-container"
+                  style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 4px;">
+                  <!-- Populated dynamically by inspection.js via manifest.json -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Active Chamber Stage & Inspection Results -->
+        <div class="panel" style="display: flex; flex-direction: column; gap: 16px; padding: 20px;">
+          <div class="panel-header" style="padding: 0 0 14px 0;">
+            <div class="panel-title">
+              <i class="fas fa-eye text-cyan"></i> Inspection Stage & AI Verdict
+            </div>
+            <span class="badge badge-cyan font-mono" id="meta-specimen-badge">LIVE SPECIMEN</span>
+          </div>
+
+          <!-- Live Result Verdict Banner (Populated after inference) -->
+          <div id="result-verdict-banner" style="display: none;"></div>
+
+          <!-- View Mode Tabs for Results (Original / Heatmap / Overlay) -->
+          <div id="stage-view-tabs" style="display: none;" class="segmented-control">
+            <button type="button" class="segmented-btn active" data-stage-view="overlay">
+              <i class="fas fa-layer-group"></i> Blended Overlay
+            </button>
+            <button type="button" class="segmented-btn" data-stage-view="heatmap">
+              <i class="fas fa-fire"></i> AI Heatmap
+            </button>
+            <button type="button" class="segmented-btn" data-stage-view="original">
+              <i class="fas fa-image"></i> Original Frame
+            </button>
+          </div>
+
+          <!-- Active Viewport Stage -->
+          <div class="chamber-stage-viewport" id="chamber-viewport-container">
+            <!-- Loading Indicator Spinner -->
+            <div id="chamber-loading-spinner" style="display: none; position: absolute; inset: 0; background: rgba(3, 6, 12, 0.75); z-index: 5; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+              <i class="fas fa-circle-notch fa-spin text-cyan" style="font-size: 2rem;"></i>
+              <span class="font-mono" style="font-size: 0.8rem; color: var(--cyan); letter-spacing: 0.05em;">LOADING SPECIMEN IMAGE...</span>
+            </div>
+
+            <!-- Broken / Missing Image Error Banner -->
+            <div id="chamber-error-box" style="display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.95); z-index: 6; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center;">
+              <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); display: flex; align-items: center; justify-content: center; color: var(--red); font-size: 1.5rem;">
+                <i class="fas fa-triangle-exclamation"></i>
+              </div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: #fff;" id="chamber-error-title">SPECIMEN IMAGE UNAVAILABLE</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); max-width: 320px; line-height: 1.5;" id="chamber-error-message">
+                Image file could not be loaded from disk or server.
+              </div>
+              <div class="font-mono text-cyan" style="font-size: 0.68rem; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; word-break: break-all;" id="chamber-error-url">
+                --
+              </div>
+            </div>
+
+            <img id="preview-stage-img" class="chamber-img" alt="Component Specimen" src="">
+            <div id="preview-placeholder-box"
+              style="display: none; flex-direction: column; align-items: center; gap: 10px; color: var(--text-muted);">
+              <i class="fas fa-image" style="font-size: 2.5rem; opacity: 0.5;"></i>
+              <span>No image loaded in chamber</span>
+            </div>
+          </div>
+
+          <!-- Metadata Spec List -->
+          <div class="specs-meta-table">
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Specimen ID:</span>
+              <span class="specs-val font-mono text-cyan" id="meta-specimen-id">SPEC-BTL-001</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Product Category:</span>
+              <span class="specs-val font-mono" id="meta-category-row">Bottle</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Ground Truth:</span>
+              <span class="specs-val font-mono" id="meta-ground-truth"><span class="badge badge-success">NORMAL (Normal
+                  Specimen)</span></span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Dataset Source:</span>
+              <span class="specs-val font-mono" id="meta-dataset-source" style="font-size: 0.72rem;">MVTec AD Bottle
+                (test/good)</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Active Image:</span>
+              <span class="specs-val font-mono" id="meta-filename"
+                style="font-size: 0.75rem; word-break: break-all;">SPEC-BTL-001_good_000.png</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Detection Score:</span>
+              <span class="specs-val font-mono" id="meta-score-row">Awaiting Scan</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Model Checkpoint:</span>
+              <span class="specs-val font-mono" id="meta-checkpoint-row"
+                style="font-size: 0.75rem;">checkpoints/defectx_bottle.pt (2.41 MB)</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Hardware Engine:</span>
+              <span class="specs-val font-mono" id="meta-engine-row">NVIDIA RTX 4050 CUDA (Python 3.11)</span>
+            </div>
+          </div>
+
+          <!-- Primary Trigger Button for Upload Mode -->
+          <button class="btn btn-primary" id="btn-run-inspection"
+            style="padding: 14px; font-size: 1rem; justify-content: center; margin-top: 4px;">
+            <i class="fas fa-bolt"></i> Run AI Defect Inspection
+          </button>
+
+          <!-- Post-Inspection Action Row (Shown after scan) -->
+          <div id="post-inspection-actions" style="display: none; gap: 10px; flex-wrap: wrap;">
+            <a href="results.html" class="btn btn-secondary btn-sm" id="btn-view-full-report"
+              style="flex: 1; justify-content: center;">
+              <i class="fas fa-file-invoice"></i> View Full QA Report
+            </a>
+            <a href="history.html" class="btn btn-secondary btn-sm" style="flex: 1; justify-content: center;">
+              <i class="fas fa-clock-rotate-left"></i> Inspection Log
+            </a>
+          </div>
+
+          <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center;">
+            Executes nearest-neighbor patch distance search against verified normal coreset memory bank.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Stepper Modal: Live Pipeline -->
+  <div class="modal-overlay" id="inspection-modal">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fas fa-microchip text-cyan"></i> Real-Time AI Inference Pipeline
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="inspection-stepper-list">
+          <div class="stepper-row active" id="step-1">
+            <div class="stepper-badge-icon"><i class="fas fa-image"></i></div>
+            <div>
+              <div class="stepper-title">1. Image Ingestion & Validation</div>
+              <div class="stepper-desc">Resizing to 224x224 & ImageNet statistical normalization</div>
+            </div>
+          </div>
+
+          <div class="stepper-row" id="step-2">
+            <div class="stepper-badge-icon"><i class="fas fa-brain"></i></div>
+            <div>
+              <div class="stepper-title">2. Deep Patch Feature Extraction</div>
+              <div class="stepper-desc">Extracting intermediate Layer 2 & 3 ResNet-18 representations</div>
+            </div>
+          </div>
+
+          <div class="stepper-row" id="step-3">
+            <div class="stepper-badge-icon"><i class="fas fa-server"></i></div>
+            <div>
+              <div class="stepper-title">3. CUDA Coreset Distance Search</div>
+              <div class="stepper-desc">Computing nearest-neighbor Euclidean distance on RTX 4050</div>
+            </div>
+          </div>
+
+          <div class="stepper-row" id="step-4">
+            <div class="stepper-badge-icon"><i class="fas fa-fire"></i></div>
+            <div>
+              <div class="stepper-title">4. Heatmap & Overlay Generation</div>
+              <div class="stepper-desc">Bilinear spatial interpolation & JET colormap blending</div>
+            </div>
+          </div>
+
+          <div class="stepper-row" id="step-5">
+            <div class="stepper-badge-icon"><i class="fas fa-stamp"></i></div>
+            <div>
+              <div class="stepper-title">5. Zero-Leakage Verdict Triage</div>
+              <div class="stepper-desc">Comparing against threshold (3.5042) & assigning severity</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/inspection.js"></script>
+</body>
+
+</html>

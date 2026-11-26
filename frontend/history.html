@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspection History — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link active" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">Workspace</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Inspection History</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <div class="system-status-pill">
+          <div class="pulse-dot"></div>
+          <span>SYSTEM READY</span>
+        </div>
+        <a href="inspection.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-bolt"></i> New Inspection
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-clock-rotate-left text-cyan"></i> Historical Inspection Log
+          </h1>
+          <p>Search, filter, inspect, and export all component quality assurance records.</p>
+        </div>
+        <div class="page-actions-group">
+          <button class="btn btn-secondary btn-sm" id="btn-export-csv">
+            <i class="fas fa-file-csv"></i> Export CSV
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-export-all-json">
+            <i class="fas fa-file-code"></i> Export JSON
+          </button>
+          <a href="inspection.html" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> Inspect New Component
+          </a>
+        </div>
+      </div>
+
+      <!-- Filter Controls Strip -->
+      <div class="panel" style="padding: 14px 18px;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 12px; align-items: center;">
+          <!-- Search -->
+          <div>
+            <input type="text" id="filter-search" class="form-input"
+              placeholder="Search by Inspection ID or filename..." style="width: 100%;">
+          </div>
+
+          <!-- Verdict Filter -->
+          <div>
+            <select id="filter-prediction" class="form-select" style="width: 100%;">
+              <option value="ALL">All Verdicts</option>
+              <option value="NORMAL">Normal Passed</option>
+              <option value="ANOMALY">Anomaly Alert</option>
+            </select>
+          </div>
+
+          <!-- Severity Filter -->
+          <div>
+            <select id="filter-severity" class="form-select" style="width: 100%;">
+              <option value="ALL">All Severities</option>
+              <option value="NONE">None</option>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="CRITICAL">Critical</option>
+            </select>
+          </div>
+
+          <!-- Sort Order -->
+          <div>
+            <select id="filter-sort" class="form-select" style="width: 100%;">
+              <option value="newest">Sort: Newest First</option>
+              <option value="score_desc">Sort: Highest Anomaly Score</option>
+              <option value="latency_asc">Sort: Fastest Latency</option>
+            </select>
+          </div>
+
+          <!-- Reset Filter -->
+          <button class="btn btn-secondary btn-sm" id="btn-clear-filters" title="Reset Filters">
+            <i class="fas fa-filter-circle-xmark"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- History Table Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fas fa-list-check"></i>
+            <span>Inspection Records (<span id="table-record-count">0</span>)</span>
+          </div>
+          <span class="badge badge-muted font-mono">10 Entries / Page</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Inspection ID</th>
+                <th>Component Specimen</th>
+                <th>Timestamp</th>
+                <th>Verdict</th>
+                <th>Score / Thresh</th>
+                <th>Severity</th>
+                <th>Device / Latency</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody">
+              <tr>
+                <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                  <i class="fas fa-spinner fa-spin"></i> Loading inspection database...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Bar -->
+        <div
+          style="padding: 12px 18px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 0.8rem; color: var(--text-muted);" id="pagination-info">
+            Showing 1 to 5 of 5 entries
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" id="btn-prev-page" disabled>
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-next-page" disabled>
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/history.js"></script>
+</body>
+
+</html>

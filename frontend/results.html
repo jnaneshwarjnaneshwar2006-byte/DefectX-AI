@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdict & Localization Report — DEFECTX AI</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/inspection.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Mobile Backdrop -->
+  <div class="sidebar-overlay-backdrop" id="sidebar-overlay-backdrop"></div>
+
+  <div class="app-shell">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand-header">
+        <a href="index.html" class="brand-link-compact">
+          <img src="assets/logo/defectx-icon.svg" alt="DEFECTX Logo" class="brand-icon-img">
+          <div class="brand-text-wrapper">
+            <span class="brand-title-text">DEFECT<span>X</span> AI</span>
+            <span class="brand-sub-badge">INDUSTRIAL VISION</span>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebar-collapse-toggle" title="Collapse / Expand Sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav-container">
+        <!-- Group 1: WORKSPACE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">WORKSPACE</div>
+          <a href="dashboard.html" class="nav-item-link" title="Command Center">
+            <i class="fas fa-gauge-high nav-item-icon"></i>
+            <span class="nav-item-title">Overview</span>
+          </a>
+          <a href="inspection.html" class="nav-item-link" title="Live AI Inspection">
+            <i class="fas fa-crosshairs nav-item-icon"></i>
+            <span class="nav-item-title">Live Inspection</span>
+          </a>
+          <a href="history.html" class="nav-item-link" title="Inspection Log">
+            <i class="fas fa-clock-rotate-left nav-item-icon"></i>
+            <span class="nav-item-title">Inspection History</span>
+          </a>
+          <a href="analytics.html" class="nav-item-link" title="Deep Telemetry">
+            <i class="fas fa-chart-pie nav-item-icon"></i>
+            <span class="nav-item-title">Analytics</span>
+          </a>
+        </div>
+
+        <!-- Group 2: AI INTELLIGENCE -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">AI INTELLIGENCE</div>
+          <a href="model-insights.html" class="nav-item-link" title="Model Insights">
+            <i class="fas fa-brain nav-item-icon"></i>
+            <span class="nav-item-title">AI Model Insights</span>
+          </a>
+          <a href="dataset-explorer.html" class="nav-item-link" title="Dataset Explorer">
+            <i class="fas fa-database nav-item-icon"></i>
+            <span class="nav-item-title">Dataset Explorer</span>
+          </a>
+          <a href="results.html" class="nav-item-link active" title="Inspection Reports">
+            <i class="fas fa-file-invoice nav-item-icon"></i>
+            <span class="nav-item-title">Inspection Reports</span>
+          </a>
+        </div>
+
+        <!-- Group 3: SYSTEM -->
+        <div class="sidebar-nav-group">
+          <div class="nav-group-label">SYSTEM</div>
+          <a href="index.html" class="nav-item-link" title="System Documentation">
+            <i class="fas fa-book-bookmark nav-item-icon"></i>
+            <span class="nav-item-title">Project Overview</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="pulse-dot"></div>
+        <div class="sidebar-telemetry-text">
+          <span class="telemetry-primary">RTX 4050 CUDA</span>
+          <span class="telemetry-secondary">Inference Active • 14.2ms</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="app-topbar">
+      <div class="topbar-left-zone">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="breadcrumbs-trail">
+          <span class="breadcrumb-root">AI Intelligence</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current">Inspection Reports</span>
+        </div>
+      </div>
+
+      <!-- Command Search -->
+      <div class="topbar-search-box">
+        <i class="fas fa-magnifying-glass search-icon-left"></i>
+        <input type="text" id="global-command-search" class="search-input-field"
+          placeholder="Search ID, specimen, or command...">
+        <span class="search-shortcut-badge">Ctrl K</span>
+      </div>
+
+      <!-- Right Zone -->
+      <div class="topbar-right-zone">
+        <a href="inspection.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-bolt"></i> Inspect Next
+        </a>
+        <button class="btn btn-secondary btn-sm" id="btn-print-report">
+          <i class="fas fa-print"></i> Print QA
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="app-main-content">
+      <!-- Page Header Strip -->
+      <div class="page-header-strip">
+        <div class="page-title-group">
+          <h1>
+            <i class="fas fa-file-invoice text-cyan"></i> Anomaly Localization & Verdict Report
+          </h1>
+          <p>
+            Record Reference: <span class="font-mono text-cyan" id="header-inspection-id">--</span>
+          </p>
+        </div>
+        <div class="page-actions-group">
+          <button class="btn btn-secondary btn-sm" id="btn-download-overlay">
+            <i class="fas fa-download"></i> Save Overlay
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-export-json">
+            <i class="fas fa-file-code"></i> JSON Record
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Grid (Visualizer + Triage Summary) -->
+      <div class="inspection-studio-grid" style="grid-template-columns: 1.3fr 0.7fr;">
+        <!-- Left: Multi-View Visualizer Stage -->
+        <div class="panel" style="display: flex; flex-direction: column; gap: 14px; padding: 20px;">
+          <!-- Controls Header -->
+          <div
+            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <div class="segmented-control">
+              <button class="segmented-btn active" data-view="split">
+                <i class="fas fa-arrows-left-right"></i> Wipe Slider
+              </button>
+              <button class="segmented-btn" data-view="side">
+                <i class="fas fa-table-columns"></i> Side-by-Side
+              </button>
+              <button class="segmented-btn" data-view="overlay">
+                <i class="fas fa-layer-group"></i> Overlay
+              </button>
+              <button class="segmented-btn" data-view="heatmap">
+                <i class="fas fa-fire"></i> Heatmap
+              </button>
+              <button class="segmented-btn" data-view="original">
+                <i class="fas fa-image"></i> Original
+              </button>
+            </div>
+
+            <span class="badge badge-cyan font-mono" style="font-size: 0.72rem;">JET Colormap (0.0 to 10.0+)</span>
+          </div>
+
+          <!-- Main Visual Stage Viewport -->
+          <div class="chamber-stage-viewport" style="max-height: 480px; aspect-ratio: 16/10;">
+            <!-- Mode 1: Split Wipe Slider -->
+            <div class="split-slider-stage" id="split-slider-container">
+              <div class="slider-layer">
+                <img id="split-bottom-img" src="" alt="Original Optical Frame">
+              </div>
+              <div class="slider-layer top-clipped" id="split-top-layer">
+                <img id="split-top-img" src="" alt="AI Heatmap Overlay">
+              </div>
+              <div class="slider-divider-knob" id="split-divider-handle">
+                <i class="fas fa-arrows-left-right"></i>
+              </div>
+            </div>
+
+            <!-- Mode 2: Side-by-Side Dual View -->
+            <div class="side-by-side-grid" id="side-by-side-container" style="display: none;">
+              <div class="side-view-pane">
+                <div class="side-view-header">ORIGINAL OPTICAL FRAME</div>
+                <img id="side-original-img" class="side-view-img" src="" alt="Original Optical">
+              </div>
+              <div class="side-view-pane">
+                <div class="side-view-header">AI DEFECT HEATMAP OVERLAY</div>
+                <img id="side-overlay-img" class="side-view-img" src="" alt="Heatmap Overlay">
+              </div>
+            </div>
+
+            <!-- Mode 3, 4, 5: Single Static Views -->
+            <img id="static-original-img" class="chamber-img" alt="Original Frame" src="" style="display: none;">
+            <img id="static-heatmap-img" class="chamber-img" alt="Anomaly Heatmap" src="" style="display: none;">
+            <img id="static-overlay-img" class="chamber-img" alt="Blended Overlay" src="" style="display: none;">
+          </div>
+
+          <!-- Colormap Legend Bar -->
+          <div
+            style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); padding-top: 4px;">
+            <span><i class="fas fa-info-circle text-cyan"></i> Drag handle left or right to wipe between original camera
+              capture and AI anomaly heatmap.</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>Min Distance (Normal)</span>
+              <div
+                style="width: 80px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #000080, #00F2FE, #FFFF00, #FF0000);">
+              </div>
+              <span class="text-red">Peak (Defect)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Technical Triage & Telemetry Summary -->
+        <div class="panel" style="display: flex; flex-direction: column; gap: 18px; padding: 22px;">
+          <!-- Verdict Banner -->
+          <div
+            style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">DEFECTX AI VERDICT
+              </div>
+              <span class="badge badge-danger" id="verdict-badge"
+                style="font-size: 0.95rem; padding: 6px 12px; margin-top: 4px;">
+                <i class="fas fa-triangle-exclamation"></i> ANOMALY DETECTED
+              </span>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Confidence /
+                Calibration</div>
+              <div class="font-mono text-cyan" id="verdict-confidence"
+                style="font-size: 1.05rem; font-weight: 700; margin-top: 2px;">
+                Uncalibrated
+              </div>
+              <div style="font-size: 0.68rem; color: var(--text-muted);" id="verdict-confidence-sub">
+                Euclidean Distance Metric
+              </div>
+            </div>
+          </div>
+
+          <!-- Heuristic Severity Meter Box -->
+          <div
+            style="background: var(--bg-panel-elevated); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: #fff;">Heuristic
+                Severity Tier</span>
+              <span class="badge badge-danger" id="severity-badge">CRITICAL</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 6px;">
+              <div style="background: var(--amber); border-radius: 2px;" id="sev-seg-1"></div>
+              <div style="background: var(--orange); border-radius: 2px;" id="sev-seg-2"></div>
+              <div style="background: var(--red); border-radius: 2px;" id="sev-seg-3"></div>
+              <div style="background: #FF4757; border-radius: 2px; box-shadow: 0 0 6px #FF4757;" id="sev-seg-4"></div>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.4;">
+              Heuristic estimate derived from anomalous patch cluster area and peak distance intensity. Clearly labeled
+              as an operational triage estimate, not a verified physical fracture measurement.
+            </div>
+          </div>
+
+          <!-- Telemetry Specs Table -->
+          <div class="specs-meta-table">
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Product Category:</span>
+              <span class="specs-val font-mono text-cyan" id="val-category">MVTec Bottle</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Anomaly Distance Score (s):</span>
+              <span class="specs-val font-mono text-cyan" id="val-anomaly-score">4.1829</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Decision Threshold (τ):</span>
+              <span class="specs-val font-mono" id="val-threshold">0.6366</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Score Margin (Δ):</span>
+              <span class="specs-val font-mono" id="val-score-delta">+3.5463</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Anomalous Area Ratio:</span>
+              <span class="specs-val font-mono" id="val-anomalous-area">36.87%</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Pixel Threshold:</span>
+              <span class="specs-val font-mono" id="val-pixel-threshold">0.5060</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Inference Latency:</span>
+              <span class="specs-val font-mono" id="val-latency">14.8 ms</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Model Architecture:</span>
+              <span class="specs-val font-mono" style="font-size: 0.75rem;">ResNet-18 L2+L3 (PatchCore)</span>
+            </div>
+            <div class="specs-meta-row">
+              <span class="specs-lbl">Execution Device:</span>
+              <span class="specs-val font-mono" id="val-device" style="font-size: 0.75rem;">NVIDIA RTX 4050 CUDA</span>
+            </div>
+          </div>
+
+          <!-- Triage Rationale -->
+          <div
+            style="background: var(--bg-input); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+            <div style="font-weight: 700; color: #fff; margin-bottom: 2px;">Triage Diagnostics:</div>
+            <div id="diagnostic-notes">Defect localized within specimen boundary. Component routed for triage.</div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
+            <a href="inspection.html" class="btn btn-primary" style="justify-content: center;">
+              <i class="fas fa-crosshairs"></i> Inspect Next Component
+            </a>
+            <a href="history.html" class="btn btn-secondary" style="justify-content: center;">
+              <i class="fas fa-list-check"></i> Return to Inspection Log
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Decision Explanation & Evidence Engine Panel -->
+      <div class="panel" id="decision-explanation-panel"
+        style="margin-top: 20px; padding: 24px; border: 1px solid var(--border-panel); background: linear-gradient(180deg, rgba(14, 22, 38, 0.95) 0%, rgba(9, 14, 26, 0.98) 100%); border-radius: var(--radius-md);">
+        <div
+          style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div
+              style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 242, 254, 0.12); border: 1px solid var(--border-cyan); display: flex; align-items: center; justify-content: center; color: var(--cyan); font-size: 1.1rem;">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div>
+              <h2 style="font-size: 1.15rem; font-weight: 700; color: #fff; margin: 0;">AI Decision Explanation Engine
+              </h2>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Deterministic Nearest-Neighbor Anomaly Scoring
+                in Feature Space</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge badge-cyan font-mono" style="font-size: 0.72rem;">Model v<span
+                id="explanation-model-version">1.0.0</span></span>
+            <span class="badge badge-cyan font-mono" style="font-size: 0.72rem;">MVTec Bottle Coreset (10%)</span>
+          </div>
+        </div>
+
+        <!-- Main Decision Statement Banner -->
+        <div id="decision-statement-banner"
+          style="padding: 18px 22px; border-radius: var(--radius-md); border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08); display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px;">
+          <div id="decision-statement-icon" style="font-size: 1.6rem; color: var(--red); margin-top: 2px;">
+            <i class="fas fa-circle-exclamation"></i>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span
+                style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted);">DETERMINISTIC
+                VERDICT RATIONALE</span>
+              <span class="badge badge-danger" id="decision-statement-badge" style="font-size: 0.7rem;">ANOMALY</span>
+            </div>
+            <div id="decision-statement-text"
+              style="font-size: 1.02rem; font-weight: 600; line-height: 1.55; color: #fff;">
+              Anomaly detected because the image anomaly score (4.1829) exceeded the configured decision threshold
+              (0.6366).
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparative Metrics & Telemetry Grid -->
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 22px;">
+          <!-- Metric 1: Anomaly Score vs Threshold Comparison -->
+          <div
+            style="background: var(--bg-panel-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span
+                style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Score
+                vs. Decision Threshold</span>
+              <span class="badge badge-danger" id="decision-delta-badge"
+                style="font-family: var(--font-mono); font-size: 0.75rem;">Δ +3.5463</span>
+            </div>
+
+            <!-- Meter Visual Bar -->
+            <div style="margin: 6px 0;">
+              <div
+                style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; font-family: var(--font-mono);">
+                <span>Score: <strong class="text-cyan" id="meter-score-val">4.1829</strong></span>
+                <span>Threshold: <strong style="color: var(--amber);" id="meter-thresh-val">0.6366</strong></span>
+              </div>
+              <div
+                style="width: 100%; height: 10px; background: rgba(255, 255, 255, 0.06); border-radius: 5px; position: relative; overflow: hidden;">
+                <div id="meter-score-fill"
+                  style="height: 100%; background: linear-gradient(90deg, #10B981, #F59E0B, #EF4444); border-radius: 5px; width: 85%;">
+                </div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.45;">
+              Image anomaly score is an unbounded Euclidean nearest-neighbor distance <span
+                class="font-mono text-cyan">s ∈ [0, ∞)</span> in PatchCore feature space.
+            </div>
+          </div>
+
+          <!-- Metric 2: Anomalous Area Coverage -->
+          <div
+            style="background: var(--bg-panel-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span
+                style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Anomalous
+                Area Coverage</span>
+              <span class="badge badge-cyan font-mono" id="area-coverage-badge">36.87%</span>
+            </div>
+            <div style="font-size: 1.45rem; font-weight: 800; color: #fff; font-family: var(--font-mono);"
+              id="area-coverage-headline">
+              36.87% of Surface
+            </div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.45;">
+              Measured by spatial pixels where local patch anomaly distance exceeds pixel threshold (<span
+                class="font-mono text-cyan" id="area-pixel-thresh">0.5060</span>).
+            </div>
+          </div>
+
+          <!-- Metric 3: Confidence Calibration Notice -->
+          <div
+            style="background: var(--bg-panel-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span
+                style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Confidence
+                Calibration</span>
+              <span class="badge"
+                style="background: rgba(148, 163, 184, 0.15); color: var(--text-secondary); font-size: 0.72rem;"
+                id="confidence-metric-badge">Distance Metric</span>
+            </div>
+            <div style="font-size: 1.05rem; font-weight: 700; color: #fff;" id="confidence-calibration-title">
+              Uncalibrated (Euclidean Metric)
+            </div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.45;">
+              Metric is Euclidean patch distance, not probability. We intentionally avoid fabricated percentage scores
+              to preserve industrial measurement integrity.
+            </div>
+          </div>
+        </div>
+
+        <!-- Scope & Disclaimers Callout Strip -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+          <!-- Heatmap Evidence Interpretation -->
+          <div
+            style="background: rgba(8, 13, 23, 0.75); border: 1px solid var(--border-subtle); border-left: 3px solid var(--cyan); border-radius: var(--radius-sm); padding: 14px 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <i class="fas fa-layer-group text-cyan" style="font-size: 0.85rem;"></i>
+              <span
+                style="font-size: 0.78rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.04em;">Heatmap
+                Interpretation Scope</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+              The heatmap highlights spatial regions with higher anomaly scores relative to the nominal coreset.
+              <strong>It does not classify specific defect categories</strong> (such as broken glass vs contamination).
+            </p>
+          </div>
+
+          <!-- Severity Prototype Disclaimer -->
+          <div
+            style="background: rgba(8, 13, 23, 0.75); border: 1px solid var(--border-subtle); border-left: 3px solid var(--amber); border-radius: var(--radius-sm); padding: 14px 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <i class="fas fa-triangle-exclamation" style="color: var(--amber); font-size: 0.85rem;"></i>
+              <span
+                style="font-size: 0.78rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.04em;">Heuristic
+                Severity Disclaimer</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; margin: 0;"
+              id="disclaimer-severity-text">
+              Heuristic visual estimate prototype only. Not a verified physical or structural damage measurement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/results.js"></script>
+</body>
+
+</html>
